@@ -79,4 +79,28 @@
 	
 	
 
+## The Box Model
 
+
+```mermaid
+graph LR;
+    A[Margin] --> B[Border];
+    B --> C[Padding];
+    C --> D[Content];
+```
+- ### Standard Box Model
+	Here, if we set `width` and `height`, they are applied to only content box. 
+- ### Alternate Box Model
+	Here, if we set `width` and `height`, they are applied to the visible box on the page, i.e. `content + padding + border`. 
+	```css
+	html {
+	  box-sizing: border-box;
+	}
+	*,
+	*::before,
+	*::after {
+	  box-sizing: inherit;
+	}
+	```
+	We use this box model more frequently, because it's easier to work with.
+	> For more info, [refer this](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model#the_standard_css_box_model).

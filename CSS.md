@@ -1,18 +1,20 @@
 ﻿  # CSS
 
 ## Selectors
-- ### Types of selectors :
+- ### Types of selectors
+
 	```css
 	*{}			/* Universal selector */
 	div{}		/* Type selector */
 	.class{}	/* Class selector */
 	#id{}		/* ID selector */
 	```
-- ### Chaining selectors :
+- ### Chaining selectors
 
 	Chain selectors without separation to target elements with multiple classes.
 
 	Example:
+	
 	```html
 	<div>
 	  <div class="subsection header">Latest Posts</div>
@@ -27,6 +29,7 @@
 	This targets elements only with both `subsection` and `header` classes.
 
 	You can also chain a class and an ID:
+	
 	```css
 	.subsection#preview {
 	  color: blue;
@@ -36,10 +39,11 @@
 	- **Limitations**
 	Cannot chain more than one type selector (e.g., `divp` is invalid).
 
-- ### Descendant Combinator :
+- ### Descendant Combinator
 	Uses a space between selectors to indicate a relationship.
 
 	Example:
+	
 	```html
 	<div class="ancestor">
 		<!-- A -->
@@ -56,10 +60,12 @@
 	  /* some declarations */
 	}
 	```
+	
 	This selects `.contents` elements (B and C) inside `.ancestor`, not D.
 	> `.ancestor > .child ` , child combinator, does the same thing
 
 	You can use multiple combinators:
+	
 	```css
 	.one .two .three .four {
 	  /* some declarations */
@@ -68,16 +74,15 @@
 	This targets `.four` inside `.three`, inside `.two`, inside `.one`. Avoid excessive nesting for clarity and specificity issues.
 	> For more info, [refer this](https://www.theodinproject.com/lessons/foundations-intro-to-css#chaining-selectors).
 
-
-- ### Specificity, the Cascade :
-
-	Sort of like a tie-breaker, when an element has multiple, conflicting declarations targeting it.  
-	- Inline style > ID selector > Class Selector > Type selector > Universal selector
-	- If specificity is the same, then whichever rule was the _last_ defined is the winner
-- ### Inheritance :
+- ### Inheritance
 	Typography-based properties (`color`, `font-size`, `font-family`, etc.) are usually inherited, while most other properties aren’t.
-	
-	
+
+## Specificity, the Cascade
+
+Sort of like a tie-breaker, when an element has multiple, conflicting declarations targeting it.  
+- Inline style > ID selector > Class Selector > Type selector > Universal selector
+- If specificity is the same, then whichever rule was the _last_ defined is the winner
+
 
 ## The Box Model
 
@@ -92,6 +97,7 @@ graph LR;
 	Here, if we set `width` and `height`, they are applied to only content box. 
 - ### Alternate Box Model
 	Here, if we set `width` and `height`, they are applied to the visible box on the page, i.e. `content + padding + border`. 
+	
 	```css
 	html {
 	  box-sizing: border-box;
@@ -105,6 +111,41 @@ graph LR;
 	We use this box model more frequently, because it's easier to work with.
 	> For more info, [refer this](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model#the_standard_css_box_model).
 
+
+
+
+## Margins
+
+> For more details, [refer this](https://css-tricks.com/almanac/properties/m/margin/).
+- ### Auto
+	- Tells the browser to define the margin for you.
+	- In most cases, a value of `auto` will be equivalent to a value of `0` or else whatever space is available on that side of the element.
+	- Handy for horizontal centering.
+
+- ### Collapsing Margins
+	- Vertical margins (only `top` and `bottom`) on different elements that touch each other (thus have no content, padding, or borders separating them) will collapse, forming a single margin that is equal to the greater of the adjoining margins.
+	- They prevent empty elements from adding extra, usually undesirable, vertical margin space, and they allow for a more consistent approach to declaring universal margins across page elements.
+	
+	```html
+	<h2>Collapsing Margins</h2>
+	<div><p>Example Text</p></div>
+	```
+	```css
+	h2 {
+	  margin: 0 0 20px 0;
+	}
+	div {
+      margin-top: 40px;  
+	}
+	p {
+      margin-top: 30px;
+	}
+	```
+	Common sense would suggest that the total vertical margin space here would be 90px (20px + 40px + 30px), but instead the margins all collapse into a single 40px margin (the highest of the three).
+
+- ### Negative Margins
+	While a positive margin value pushes other elements away, a negative margin will either pull the element itself in that direction, or pull other elements toward it.
+	
 
 ## Block and Inline
 

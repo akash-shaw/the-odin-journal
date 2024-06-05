@@ -108,19 +108,27 @@ graph LR;
 
 ## Block and Inline
 
-> **Normal Flow**, or **Flow Layout**, is the way that Block and Inline elements are displayed on a page before any changes are made to their layout. 
+`block` and `inline` are **outer display types**.
+
+> [**Normal Flow**](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Normal_Flow) is the way that Block and Inline elements are displayed on a page by default before any changes are made to their layout.
 
 -  ### Block
-	`display: block;` is the default property for most of the elements, e.g. `<div>`, `<p>`, etc. 
-
-	They appear on the page stacked atop each other, each new element starting on a new line. They take full horizontal space.
+	-   The box will break onto a new line.
+	-   The `width` and `height` properties are respected.
+	-   Padding, margin and border will cause other elements to be pushed away from the box.
+	-   If `width` is not specified, the box will extend in the inline direction to fill the space available in its container. In most cases, the box will become as wide as its container, filling up 100% of the space available.
+	- Some HTML elements, such as `<h1>` and `<p>`, use `block` as their outer display type by default.
 
 - ### Inline
-	Inline elements like `<span>`, `<a>`, `<button>`, etc. however, do not start on a new line. They appear in line with whatever elements they are placed beside. 
-	
-	For example, if we stick an anchor link `<a>` in the middle of a paragraph `<p>`, it behaves like a part of the paragraph. 
-
-	 Padding and margin behave differently on inline elements. In general, you do not want to try to put extra padding or margin on inline elements.
+	-   The box will not break onto a new line.
+	-   The `width` and `height` properties will not apply.
+	-   Top and bottom padding, margins, and borders will apply but will not cause other inline boxes to move away from the box.
+	-   Left and right padding, margins, and borders will apply and will cause other inline boxes to move away from the box.
+	- Some HTML elements, such as `<a>`, `<span>`, `<em>` and `<strong>` use `inline` as their outer display type by default.
 
 - ### Inline-block
-	Inline-block elements behave like inline elements, but with block-style padding and margin. `display: inline-block` is a useful tool to know about, but in practice, you’ll probably end up reaching for flexbox more often if you’re trying to line up a bunch of boxes.
+	- Midway between block and inline.
+	- The box will not break into a new line.
+	-  The `width` and `height` properties are respected.
+	- Both top-bottom, left-right padding, margins, and borders will apply and will cause other inline boxes to move away from the box.
+	- Useful tool to know about, but in practice, you’ll probably end up reaching for flexbox more often if you’re trying to line up a bunch of boxes.

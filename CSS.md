@@ -1,6 +1,7 @@
-﻿  # CSS
+﻿# CSS
 
 ## Selectors
+
 - ### Types of selectors
 
 	```css
@@ -125,7 +126,8 @@ graph LR;
 - ### Collapsing Margins
 	- Vertical margins (only `top` and `bottom`) on different elements that touch each other (thus have no content, padding, or borders separating them) will collapse, forming a single margin that is equal to the greater of the adjoining margins.
 	- They prevent empty elements from adding extra, usually undesirable, vertical margin space, and they allow for a more consistent approach to declaring universal margins across page elements.
-	
+
+
 	```html
 	<h2>Collapsing Margins</h2>
 	<div><p>Example Text</p></div>
@@ -173,3 +175,134 @@ graph LR;
 	-  The `width` and `height` properties are respected.
 	- Both top-bottom, left-right padding, margins, and borders will apply and will cause other inline boxes to move away from the box.
 	- Useful tool to know about, but in practice, you’ll probably end up reaching for flexbox more often if you’re trying to line up a bunch of boxes.
+
+## Flexbox
+
+> Flex [Visual Cheatsheet](https://flexbox.malven.co/)
+
+Flexbox is an **inner display type** (`flex` and `inline-flex`) to arrange items into rows or columns. These items will **flex (i.e. grow or shrink)** based on some rules that you can define.
+
+```html
+<div class="flex-container">
+  <div class="one"></div>
+  <div class="two"></div>
+  <div class="three"></div>
+</div>
+```
+```css
+.flex-container {
+  display: flex;
+}
+.flex-container div {
+  background: peachpuff;
+  border: 4px solid brown;
+  height: 100px;
+  flex: 1;
+}
+```
+- ### Flex Shorthand
+	```css
+	flex: <flex-grow> <flex-shrink> <flex-basis>
+	```
+	 
+- ### Flex Types
+	> [This scrim](https://v2.scrimba.com/learn-flexbox-c0k/~09) explains flex-grow, flex-shrink, flex-basis really well.
+
+
+	 **`flex: 1`  --> `flex: 1 1 0`** sizes the item based on the `width` / `height` properties. 
+	
+	**`flex: initial` --> `flex 0 1 auto`** sizes the item based on the `width` / `height` properties. It shrinks to its minimum size to fit the container, but does not grow to absorb any extra free space in the flex container.
+ 
+	 **`flex: auto`  --> `flex: 1 1 auto`** sizes the item based on the `width` / `height` properties, but makes them *fully flexible*, so that they absorb any free space by growing along the *main axis* (`flex-direction`), and shrinks to its minimum size to fit the container.
+ 
+	 **`flex: none` --> `flex: 0 0 auto`** sized according to its `width` / `height` properties. Makes it *fully inflexible*. Neither shrinks nor grows.
+ 
+	 **`flex: <positive-number>` --> `flex: <positive-number> 1 0`** receives the specified proportion
+	> For more details, [refer this](https://developer.mozilla.org/en-US/docs/Web/CSS/flex).
+
+
+- ### Flex Grow
+	`flex-grow` expects a single number as its value, and that number is used as the flex-item’s “growth factor”. When we applied `flex: 1` to every div inside our container, we were telling every div to grow the same amount. The result of this is that every div ends up the exact same size. If we instead add `flex: 2` to just one of the divs, then that div would grow to 2x the size of the others.
+
+- ### Flex Shrink
+	`flex-shrink` is similar to `flex-grow`, but sets the “shrink factor” of a flex item. `flex-shrink` only ends up being applied if the size of all flex items is larger than their parent container.
+
+	For example, if our 3 divs from above had a width declaration like: `width: 100px`, and `.flex-container` was smaller than `300px`, our divs would have to shrink to fit.
+
+	The default shrink factor is `flex-shrink: 1`, which means all items will shrink evenly. If you do _not_ want an item to shrink then you can specify `flex-shrink: 0;`.
+	> While using flex-shrink make sure to set `flex-basis: auto` and give a width to the element.
+
+- ### Flex Basis
+	> [Chatgpt conversation](https://chatgpt.com/c/0df2e3c4-220e-44b2-8ff8-3a981fe01621) for reference.
+	
+	Specifies the initial main size of a flex item before any space distribution takes place. It overrides the `width` or `height` properties of a flex item.
+
+
+	```css
+	.item {
+	  flex-basis: <length> | auto | initial | inherit; }
+	```
+	
+	-   **\<length\>**: A specific size (e.g., `10px`, `50%`, etc.). This sets the initial size of the flex item to the given length.
+	-   **auto**: The default value. The size is determined by the item's content and any `width` or `height` properties.
+	-   **initial**: Sets the property to its default value (which is `auto`).
+	-   **inherit**: The value is inherited from the parent element.
+		> Default `flex-basis: auto` , but while using `flex: 1`, it sets `flex-basis: 0`
+
+	
+- ### Axes
+	![flex basic terminology](https://css-tricks.com/wp-content/uploads/2018/11/00-basic-terminology.svg)
+	There are two axes or `flex-direction`,
+	- `row` or horizontal (default)
+	- `column` or vertical
+	> While using `row`,  `flex-basis` refers to `width`,
+	> but in case of colum it refers to `height`.
+	>
+	> So using `flex: 1` causes problem in `column`, setting `flex-basis: 0`.
+
+
+- ### Alignment
+	All about `align-items` (cross axis) and `justify-content` (primary axis). Additionaly `align-items`, `align-content`, `align-self`.
+	> [Refer this](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) for a quick recap. The images and examples are super helpful.
+
+	> [Refer this](https://www.joshwcomeau.com/css/interactive-guide-to-flexbox/) for a comprehensive guide. GOATed resourse. covers everything one needs to know about flexbox.
+
+- ### Order
+	By default, flex items are laid out in the source order. However, the `order` property controls the order in which they appear in the flex container.
+	```css
+	.item{
+	  order: 69;	/* can be -ve also */
+	}
+	```
+	the itmes are arranged in ascending  `order`. Items with the same `order` revert to source order.
+	> Refer [this codepen](https://codepen.io/akashshaw/pen/yLWoYwM) for example.
+
+- ### Wrapping
+	`flex-wrap: wrap` divides the flex into multiple main axes based on `flex-basis`
+	```css
+	.container{
+	  flex-wrap: nowrap | wrap | wrap-reverse;
+	}
+	```
+	> For details, [refer this](https://www.joshwcomeau.com/css/interactive-guide-to-flexbox/#wrapping-14).
+
+- ### Gap
+	The gap property explicitly controls the space between flex items. It applies that spacing only between items not on the outer edges.
+	```css
+	.container{
+	  gap: 10px;
+	  gap: 10px 20px; /* row-gap column gap */
+	  row-gap: 10px;
+	  column-gap: 20px;
+	}
+	```
+
+- ### When to use flexbox?
+	> For a detailed guide, [refer this](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Typical_Use_Cases_of_Flexbox).
+	- When we want to lay a collection of items out in one direction or another.
+		>For working with multiple rows and columns and larger layouts grid may be a better option.
+	- [Navbars](https://www.joshwcomeau.com/css/interactive-guide-to-flexbox/#auto-margins-13) (The ideal flexbox usecase)
+	- [Centering](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Typical_use_cases_of_flexbox#center_item) a single item
+	- [Card layouts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Typical_Use_Cases_of_Flexbox#card_layout_pushing_footer_down) pushing footer down
+	- [Media objects](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Typical_use_cases_of_flexbox#media_objects) (an image or other element to one side and text to the right)
+	- [Responsive forms](https://www.joshwcomeau.com/css/interactive-guide-to-flexbox/) without using media queries

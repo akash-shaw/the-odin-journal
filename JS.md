@@ -2,7 +2,7 @@
 
 ## Printing
 
-```js
+```javascript
 console.log("Hello, JavaScript")
 ```
 
@@ -10,7 +10,7 @@ console.log("Hello, JavaScript")
 
 ### let
 
-```js
+```javascript
 "use strict";	// prevents use of variables withour declaring it
 num = 5;	// error: num is not defined
 let num =5;	// valid
@@ -30,7 +30,7 @@ let num =5;	// valid
 
 - Declare difficult to remember values (hard-coded) in **UPPERCASE** (community practice), e.g.
 
-	```js
+	```javascript
 	const COLOR_RED = "#F00";
 	```
 
@@ -59,13 +59,13 @@ let num =5;	// valid
 - `x ** y` means $x^y$
 - JavaScript Numbers are Always 64-bit Floating Point
 - 
-	```js
+	```javascript
 	let x = 123e5;    // 12300000
 	let y = 123e-5;   // 0.00123
 	```
  - Integers (numbers without a period or exponent notation) are accurate up to 15 digits.
 		 
-	```js
+	```javascript
 	let x = 999999999999999; // x will be 999999999999999  
 	let y = 9999999999999999; // y will be 10000000000000000
 	``` 
@@ -74,14 +74,14 @@ let num =5;	// valid
 	
 	`bigInt` is used for very huge numbers.
 
-	```js
+	```javascript
 	const hugeNum = 68509236539n;	// Add n at last to declare as bigInt
 	// You can't mix bigInt with normal number type
 	```
 
 - Floating point arithmetic is not always 100% correct
  
-	```js
+	```javascript
 	let x = 0.2 + 0.1;	// 0.30000000000000004
 	// To solve this, it helps to multiply and divide
 	let x = (0.2 * 10 + 0.1 * 10) / 10;
@@ -91,12 +91,12 @@ let num =5;	// valid
 	Numbers are added. Strings are concatenated.
 	`number` + `string` = `string`
 
-	```js
+	```javascript
 	let x = 10;  
 	let y = 20;  
 	let z = "The result is: " + x + y;	// The result is: 1020
 	```
-	```js
+	```javascript
 	let x = 10;  
 	let y = 20;  
 	let z = "30";  
@@ -105,7 +105,7 @@ let num =5;	// valid
 
 - JavaScript will try to convert **numeric strings** to numbers in all numeric operations
 
-	```js
+	```javascript
 	let x = "100";
 	let y = "10";
 	let z = x / y;	// 10
@@ -117,19 +117,19 @@ let num =5;	// valid
 
 - Trying to do arithmetic with a non-numeric string will result in `NaN` (Not a Number)
 
-	```js
+	```javascript
 	let x = 100 / "Apple";	// NaN
 	```
-	```js
+	```javascript
 	let x = 100 / "Apple";  
 	isNaN(x);	// true
 	```
-	```js
+	```javascript
 	let x = NaN;  
 	let y = 5;  
 	let z = x + y;	//NaN
 	```
-	```js
+	```javascript
 	let x = NaN;  
 	let y = "5";  
 	let z = x + y;	//NaN5
@@ -137,7 +137,7 @@ let num =5;	// valid
 
 - JavaScript interprets numeric constants as hexadecimal if they are preceded by `0x`.
 	
-	```js
+	```javascript
 	let x = 0xFF;
 	console.log(x);	//255
 	```
@@ -146,7 +146,7 @@ let num =5;	// valid
 	Some JavaScript versions interpret numbers as octal if they are written with a leading zero.
 
 - 
-	```js
+	```javascript
 	let x = 10;	// decimal as default
 	let y = x.toString(2);	// base as parameter
 	let z = x.toString(8);
@@ -158,7 +158,7 @@ let num =5;	// valid
 	Similarly `!==` is strict non-equality operator
 	**Use only strict operators**, it leads to less errors
 
-	```js
+	```javascript
 	console.log( "5" == 5 )   // true
 	console.log( "5" === 5 )  // false
 	console.log( 5 !== 2+3 )  // false
@@ -166,7 +166,7 @@ let num =5;	// valid
 
 - To round-off floats,
 
-	```js
+	```javascript
 	let  lotsOfDecimal  =  3.135479876455325;
 	let  fixedInt  =  lotsOfDecimal.toFixed(2);
 	console.log(fixedInt);	// 3.14
@@ -174,13 +174,13 @@ let num =5;	// valid
 
 - String to number
 
-	```js
+	```javascript
 	let myNumber = "74";
 	myNumber = Number(myNumber);
 	```
 - Unary `+` or unary `-` converts string to number.
 
-	```js
+	```javascript
 	let num = "5";
 	console.log(num, typeof num);	// 3 string
 	num = -num;
@@ -189,7 +189,7 @@ let num =5;	// valid
 - `++` or `--` only applies to variables. Doing `5++` will give an error
 - Backticks are “extended functionality” quotes. They allow us to embed variables and expressions into a string by wrapping them in `${…}`, for example:
 
-	```js
+	```javascript
 	let name = "John";
 
 	// embed a variable

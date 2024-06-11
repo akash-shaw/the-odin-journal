@@ -1,3 +1,4 @@
+
 # JavaScript
 
 ## Printing
@@ -187,17 +188,26 @@ let num =5;	// valid
 	console.log(num, typeof num);	// -2 'number'
 	```
 - `++` or `--` only applies to variables. Doing `5++` will give an error
-- Backticks are “extended functionality” quotes. They allow us to embed variables and expressions into a string by wrapping them in `${…}`, for example:
 
-	```javascript
-	let name = "John";
 
-	// embed a variable
-	alert( `Hello, ${name}!` ); // Hello, John!
 
-	// embed an expression
-	alert( `the result is ${1 + 2}` ); // the result is 3
-	```
-	Note: It can only be done in backticks.
+## Data Types
 
-- The special `null` value does not belong to any type. It is not a “reference to a non-existing object” or a “null pointer” like in some other languages. It’s just a special value which represents “nothing”, “empty” or “value unknown”.
+There are 8 basic data types in JavaScript.
+
+-   Seven primitive data types:
+    -   `number` for numbers of any kind: integer or floating-point, integers are limited by `±(253-1)`.
+    -   `bigint` for integer numbers of arbitrary length.
+    -   `string` for strings. A string may have zero or more characters, there’s no separate single-character type.
+    -   `boolean` for `true`/`false`.
+    -   `null` for unknown values – a standalone type that has a single value `null`.
+    -   `undefined` for unassigned values – a standalone type that has a single value `undefined`.
+    -   `symbol` for unique identifiers for objects.
+-   And one non-primitive data type:
+    -   `object` for more collection of data and more complex data structures.
+
+The `typeof` operator allows us to see which type is stored in a variable.
+
+-   Usually used as `typeof x`, but `typeof(x)` is also possible.
+-   Returns a string with the name of the type, like `"string"`.
+-   For `null` returns `"object"` – this is an error in the language, it’s not actually an object.

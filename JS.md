@@ -221,7 +221,7 @@ The `typeof` operator allows us to see which type is stored in a variable.
 	-   you can [embed JavaScript](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Strings#embedding_javascript) in them
 	-   you can declare template literals over [multiple lines](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Strings#multiline_strings)
 
-### Embedding JS
+### Template Literals
 
 Inside a template literal `` ` ``, you can wrap JavaScript variables or expressions inside `${ }`, and the result will be included in the string
 
@@ -254,6 +254,7 @@ console.log(output); // "I like the song Fight the Youth. I gave it a score of 9
 Template literals respect the line breaks in the source code:
 
 ```javascript
+// Only works with backticks `
 const newline = `One day you finally knew
 what you had to do, and began,`;
 console.log(newline);
@@ -293,6 +294,8 @@ console.log(typeof myString2);	// string
 ```
 
 ## String Methods
+All string methods return a new value.
+They do not change the original variable.
 | Name | Syntax | Notes |
 |--|--|--|
 | Length | `myString.lenght` |  | 
@@ -310,9 +313,40 @@ console.log(typeof myString2);	// string
 |  | `myString.trimStart()` |  |
 |  | `myString.trimEnd()` |  |
 | Padding | `myString.padStart(no, str)`<br>myString.padEnd(no, str) | Add `no` of `str` to start/end of a string.<br>To pad a number, convert the number to a string first.<br>[Ref](https://www.w3schools.com/jsref/jsref_string_padstart.asp). |
-| Repeat | `myString.repeat(count)` | Returns a string with a number of copies of a string.<br>It returns a new string, does not change the original string. |
-| Replace | `myString.replace("Old","New")` | Replaces first "Old" with "New"<br>It returns new string without changing the og.<br>Case sensitive. |
+| Repeat | `myString.repeat(count)` | Returns a string with a number of copies of a string. |
+| Replace | `myString.replace("Old","New")` | Replaces first "Old" with "New"<br>Case sensitive. |
 |  | myString.replace(/New/g,"Old")<br>`myString.replaceAll("Old","New")` | `/g` global flag, to replace all occurrences |
 |  | myString.replace(/NEW/i,"Old") | Not case sensitive |
 |  | myString.replace(/NEW/i,"Old")<br>myString.replaceAll(/NEW/g,"Old") | We can use [RegExp](https://www.w3schools.com/jsref/jsref_obj_regexp.asp) this way. |
 | String ---> Array | `myString.split(" ")`<br>`myString.split("")` | Splits on spaces.<br>Returns array of spaces. |
+| Includes | `myStr.includes(substr)` | Returns true/false |
+| Search | `myStr.search(substr)` | Searches a string for a value, or Regexp, and returns the index of the match |
+| Starts with<br>Ends with | `myString.startWith(substr)`<br>`myString.startWith(substr)` | Returns true/false |
+
+> [Complete list](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) of string methods.
+
+- To compare strings use `===`, to do it case insensitively check all upper once then all lower once, and return their and.
+
+### Evaluate string expression
+```javascript
+let str = "15*7/12";
+console.log(eval(str));	//8.75
+```
+### String Object <---> Primitive String
+To convert a primitive string to an object:
+```javascript
+let strPrim = "Hello!";
+let strObj = new String(strPrim);
+
+console.log(typeof strObj, strObj);	// Object String{'Hello!'}
+```
+To convert an object to a primitive string:
+```javascript
+let strObj = new String("Hello!");
+let strPrim = strObj.valueOf();
+
+console.log(typeof strPrim, strPrim);	// String Hello!
+```
+
+### Emojis and `split("")`
+All the characters in string are UTF-16 codes. But emojis are made of more than one code. So while using `split("")` in strings with emojis we shiuld be careful, as it'll break the emoji into several unicodes.

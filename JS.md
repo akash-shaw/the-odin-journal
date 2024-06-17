@@ -221,7 +221,7 @@ The `typeof` operator allows us to see which type is stored in a variable.
 	-   you can [embed JavaScript](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Strings#embedding_javascript) in them
 	-   you can declare template literals over [multiple lines](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Strings#multiline_strings)
 
-### Template Literals
+### Regular Expressions
 
 Inside a template literal `` ` ``, you can wrap JavaScript variables or expressions inside `${ }`, and the result will be included in the string
 
@@ -237,7 +237,10 @@ const two = "how are you?";
 const joined = `${one}${two}`;
 console.log(joined); // "Hello, how are you?"
 ```
->However, template literals make code more readable.
+> However, template literals make code more readable.
+> [RegExp in details](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions).
+> [RegExp in 20 mins](https://youtu.be/rhzKDrUiJVk?si=5QwD6ZD0-RjrAx00).
+> [When not to use RegExp](https://softwareengineering.stackexchange.com/questions/113237/when-you-should-not-use-regular-expressions).
 
 We can use expressions in template literals:
 ```javascript

@@ -350,3 +350,113 @@ console.log(typeof strPrim, strPrim);	// String Hello!
 
 ### Emojis and `split("")`
 All the characters in string are UTF-16 codes. But emojis are made of more than one code. So while using `split("")` in strings with emojis we shiuld be careful, as it'll break the emoji into several unicodes.
+
+
+## Conditionals
+
+Any value that is not `false`, `undefined`, `null`, `0`, `NaN`, or an empty string (`''`) returns `true` when tested as a conditional statement.
+
+### Comparison of different types
+When comparing values of different types, JavaScript converts the values to numbers:
+```javascript
+alert( '2' > 1 ); // true, string '2' becomes a number 2
+alert( '01' == 1 ); // true, string '01' becomes a number 1
+alert( '2' > '12' ); // true, string dictionary comparision
+```
+**Avoid Problems:**
+- The values `null` and `undefined` equal `==` each other and do not equal any other value.
+- Be careful when using comparisons like `>` or `<` with variables that can occasionally be `null/undefined`. Checking for `null/undefined` separately is a good idea.	
+	> For details refer [this](https://javascript.info/comparison).
+
+### if, else if, else
+Basic syntax:
+```javascript
+if (time < 10) {
+  greeting = "Good morning";
+} else if (time < 20) {
+  greeting = "Good day";
+} else {
+  greeting = "Good evening";
+}
+```
+
+### Ternary Operator
+
+```JAVASCRIPT
+condition ? run this code if true : run this code if false
+```
+```javascript
+const greeting = isBirthday
+  ? "Happy birthday Mrs. Smith — we hope you have a great day!"
+  : "Good morning Mrs. Smith.";
+```
+```javascript
+let message;
+
+if (login == 'Employee') {
+  message = 'Hello';
+} else if (login == 'Director') {
+  message = 'Greetings';
+} else if (login == '') {
+  message = 'No login';
+} else {
+  message = '';
+}
+```
+
+### Switch Statement
+Equality checks are strict `===`
+
+```javascript
+let a = 3;
+
+switch (a) {
+  case 4:
+    alert('Right!');
+    break;
+
+  case 3: // (*) grouped two cases
+  case 5:
+    alert('Wrong!');
+    alert("Why don't you take a math class?");
+    break;
+
+  default:
+    alert('The result is strange. Really.');
+}
+```
+
+
+## Logical Operators
+
+### OR ||
+
+-   Evaluates operands from left to right.
+-   For each operand, converts it to boolean. If the result is `true`, stops and returns the original value of that operand.
+-   If all operands have been evaluated (i.e. all were `false`), returns the last operand.
+
+	```javascript
+	let firstName = "";
+	let lastName = "";
+	let nickName = "SuperCoder";
+
+	alert( firstName || lastName || nickName || "Anonymous"); // SuperCoder
+	```
+
+### AND &&
+-   Evaluates operands from left to right.
+-   For each operand, converts it to a boolean. If the result is `false`, stops and returns the original value of that operand.
+
+	```javascript
+	alert( 1 && 2 && null && 3 ); // null
+	alert( 1 && 2 && 3 ); // 3, the last one
+	```
+
+### NOT !
+
+-  Converts the operand to boolean type: `true/false`.
+
+	```javascript
+	alert( "non-empty string" ); // true
+	alert( !"" ); // true
+	```

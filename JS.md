@@ -463,3 +463,355 @@ switch (a) {
 	alert( "non-empty string" ); // true
 	alert( !"" ); // true
 	```
+
+
+## Functions
+
+### Default parameters
+
+If you're writing a function and want to support optional parameters, you can specify default values by adding `=` after the name of the parameter, followed by the default value:
+
+```javascript
+function hello(name = "Chris") {
+  console.log(`Hello ${name}!`);
+}
+
+hello("Ari"); // Hello Ari!
+hello(); // Hello Chris!
+
+```
+
+### Anonymous Functions
+function with no name, **funciton expression**
+
+```javascript
+// Normal
+fucntion logkey(event){
+	console.log(`You pressed "${event.key}".`);
+}
+textBox.addEventListener("keydown", logKey);
+
+// Annonymous Functions
+textBox.addEventListener("keydown", fuction (event) {
+	console.log(`You pressed "${event.key}".`);
+});
+```
+
+### Arrow Functions
+Alternate way to write annonymous functions.
+```javascript
+// Arrow Functions
+textBox.addEventListener("keydown", (event)=> {
+	console.log(`You pressed "${event.key}".`);
+});
+
+// Only one parameter, we can omit ()
+textBox.addEventListener("keydown", event=> {
+	console.log(`You pressed "${event.key}".`);
+});
+
+// No prameters
+let sayHi = () => alert("Hello!");
+sayHi();
+
+// Only one return value
+const originals = [1, 2, 3];
+const doubled = originals.map(item => item * 2);
+console.log(doubled); // [2, 4, 6]
+
+// is similar to
+function doubleItem(item) {
+  return item * 2;
+}
+
+```
+```javascript
+let func = (arg1, arg2, ..., argN) => expression;
+
+let func = function(arg1, arg2, ..., argN) {
+  return expression;
+};
+
+let sum = (a, b) => a + b;
+
+let double = n => n * 2;
+alert( double(3) ); // 6
+// roughly the same as: let double = function(n) { return n * 2 }
+
+```
+Another example with conditional declaration
+```javascript
+let welcome = (age < 18) ?
+  () => alert('Hello!') :
+  () => alert("Greetings!");
+```
+
+### Default Parameters
+
+```javascript
+// New Method
+function showMessage(from, text = "no text given") {
+  alert( from + ": " + text );
+}
+showMessage("Ann"); // Ann: no text given
+showMessage("Ann", "Hello"); // Ann: Hello
+
+// Old Method
+
+function showMessage(from, text) {
+  if (text === undefined) {
+    text = 'no text given';
+  }
+  alert( from + ": " + text );
+}
+
+// OR ||
+function showMessage(from, text) {
+  text = text || 'no text given';
+  ...
+}
+```
+
+### nullish coalescing operator
+
+it’s better when most falsy values, such as `0`, should be considered “normal”
+
+```javascript
+function showCount(count) {
+  // if count is undefined or null, show "unknown"
+  alert(count ?? "unknown");
+}
+```
+
+### Return
+```javascript
+function checkAge(age) {
+  if (age >= 18) {
+    return true;
+  } else {
+    return confirm('Do you have permission from your parents?');
+  }
+}
+```
+- When no return statement function returns `undefined`. 
+
+### Function is a value
+
+In js functions are trated as variables.
+```javascript
+// Normal method called "Function Declarartion", Most preffered
+function sayHi() {
+  alert( "Hello" );
+}
+
+console.log( sayHi ); // prints the function code
+```
+```javascript
+function sayHi() {
+  console.log("Hello");
+}
+
+let greet = sayHi; // Assign function to a variable, function expression
+greet(); // Hello
+sayHi(); // Hello
+```
+```javascript
+let greet = function() {
+  console.log("Hi there!");
+};
+greet(); // Hi there!
+```
+> Note: Only use function expressions when you need conditional declaration.
+
+-   Function Declarations are processed before the code block is executed. They are visible everywhere in the block.
+-   Function Expressions are created when the execution flow reaches them.
+
+### Callback functions
+
+Functions can be passed as values. The idea is that we pass a function and expect it to be “called back” later if necessary.
+```javascript
+function ask(question, yes, no) {
+  if (confirm(question)) yes()
+  else no();
+}
+
+function showOk() {
+  alert( "You agreed." );
+}
+
+function showCancel() {
+  alert( "You canceled the execution." );
+}
+
+// usage: functions showOk, showCancel are passed as arguments to ask
+ask("Do you agree?", showOk, showCancel);
+// Or Annonymous Expression
+ask(
+  "Do you agree?",
+  function() { alert("You agreed."); },
+  function() { alert("You canceled the execution."); }
+);
+```
+The arguments `showOk` and `showCancel` of `ask` are called _callback functions_ or just _callbacks_.
+
+### Calling before declaration
+
+
+A global Function Declaration is visible in the whole script, no matter where it is.
+
+That’s due to internal algorithms. When JavaScript prepares to run the script, it first looks for global Function Declarations in it and creates the functions. We can think of it as an “initialization stage”.
+
+And after all Function Declarations are processed, the code is executed. So it has access to these functions.
+
+For example, this works:
+
+```javascript
+sayHi("John"); // Hello, John
+
+function sayHi(name) {
+  alert( `Hello, ${name}` );
+}
+```
+
+The Function Declaration `sayHi` is created when JavaScript is preparing to start the script and is visible everywhere in it.
+
+…If it were a Function Expression, then it wouldn’t work:
+
+```javascript
+sayHi("John"); // error!
+
+let sayHi = function(name) {  // (*) no magic any more
+  alert( `Hello, ${name}` );
+};
+```
+
+Function Expressions are created when the execution reaches them. That would happen only in the line `(*)`. Too late.
+
+### Conditional Function Decalrations
+
+```javascript
+let age = 16; // take 16 as an example
+
+if (age < 18) {
+  welcome();               // \   (runs)
+                           //  |
+  function welcome() {     //  |
+    alert("Hello!");       //  |  Function Declaration is available
+  }                        //  |  everywhere in the block where it's declared
+                           //  |
+  welcome();               // /   (runs)
+
+} else {
+
+  function welcome() {
+    alert("Greetings!");
+  }
+}
+
+// Here we're out of curly braces,
+// so we can not see Function Declarations made inside of them.
+
+welcome(); // Error: welcome is not defined
+```
+We can do:
+```javascript
+let age = prompt("What is your age?", 18);
+
+let welcome;
+
+if (age < 18) {
+
+  welcome = function() {
+    alert("Hello!");
+  };
+
+} else {
+
+  welcome = function() {
+    alert("Greetings!");
+  };
+
+}
+
+welcome(); // ok now
+```
+or simply
+```javascript
+let age = prompt("What is your age?", 18);
+
+let welcome = (age < 18) ?
+  function() { alert("Hello!"); } :
+  function() { alert("Greetings!"); };
+
+welcome(); // ok now
+```
+
+
+
+## Function Scope
+
+
+- the variables and other things defined inside the function are inside their own separate **scope**
+- The top-level outside all your functions is called the **global scope**. Values defined in the global scope are accessible from everywhere in the code.
+- Keeping parts of your code locked away in functions avoids such problems, and is considered the best practice.
+
+For example, say you have an HTML file that is calling in two external JavaScript files, and both of them have a variable and a function defined that use the same name:
+
+html
+
+```javascript
+<!-- Excerpt from my HTML -->
+<script src="first.js"></script>
+<script src="second.js"></script>
+<script>
+  greeting();
+</script>
+
+```
+js
+``` javascript
+// first.js
+const name = "Chris";
+function greeting() {
+  alert(`Hello ${name}: welcome to our company.`);
+}
+
+```
+
+js
+```javascript
+// second.js
+const name = "Zaptec";
+function greeting() {
+  alert(`Our company is called ${name}.`);
+}
+
+```
+
+Both functions you want to call are called `greeting()`, but you can only ever access the `first.js` file's `greeting()` function (the second one is ignored). In addition, an error results when attempting (in the `second.js` file) to assign a new value to the `name` variable — because it was already declared with `const`, and so can't be reassigned.
+
+## Call Stack
+
+- The call stack works based on the last-in-first-out (LIFO) principle.
+- When you execute a script, the JavaScript engine creates a global execution context and pushes it on top of the call stack.
+- Whenever a function is called, the JavaScript engine creates a function execution context for the function, pushes it on top of the call stack, and starts executing the function.
+- If a function calls another function, the JavaScript engine creates a new function execution context for the function being called and pushes it on top of the call stack.
+- When the current function completes, the JavaScript engine pops it off the call stack and resumes the execution where it left off.
+- The script will stop when the call stack is empty.
+- it can throw soverflow exception when no of function call exceeds limit. eg. infinite recursive call.
+- JavaScript is a single-threaded programming language. This means that the JavaScript engine has only one call stack. Therefore, it only can do one thing at a time.
+
+When executing a script, the JavaScript engine executes code from top to bottom, line by line. In other words, it is synchronous.
+```javascript
+function add(a, b) {
+    return a + b;
+}
+
+function average(a, b) {
+    return add(a, b) / 2;
+}
+
+let x = average(10, 20);
+
+```
+![enter image description here](https://www.javascripttutorial.net/wp-content/uploads/2019/12/JavaScript-Call-Stack.png)

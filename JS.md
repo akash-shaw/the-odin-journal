@@ -814,4 +814,47 @@ function average(a, b) {
 let x = average(10, 20);
 
 ```
-![enter image description here](https://www.javascripttutorial.net/wp-content/uploads/2019/12/JavaScript-Call-Stack.png)
+![JavaScript Call Stack illustration](https://www.javascripttutorial.net/wp-content/uploads/2019/12/JavaScript-Call-Stack.png)
+
+## Arrays
+
+```javascript
+const cars = ["Saab", "Volvo", "BMW"];
+```
+```javascript
+const cars = [];  
+cars[0]= "Saab";  
+cars[1]= "Volvo";  
+cars[2]= "BMW";
+```
+Array are objects in js.
+Objects use **names** to access its "members". In this example, `person.firstName` returns John:
+```javascript
+const person = {firstName:"John", lastName:"Doe", age:46};
+```
+### Array Methods
+
+| Method | Syntax | Use |
+|--|--|--|
+|index|`arr[i]`|to access i'th index. -ve not allowed|
+|at|`arr.at(i)`|to accesss index. -ve allowed|
+| lenght | `arr.length` ||
+|sort|`arr.sort()`|sorts the array|
+|tostring|`const fruits = ["Banana", "Orange", "Apple", "Mango"];`<br>`console.log(fruits.toString())`|Banana,Orange,Apple,Mango|
+|join|`console.log(fruits.join(" * "))`|Banana * Orange * Apple * Mango|
+|push|`arr.push(item)`|add new element to array. LIFO|
+|push|`arr.pop()`|pops last entered element. LIFO|
+|shift|`fruits.shift()`|removes `"Banana"`, Similar to Dequeue, FIFO |
+|unshift|`fruits.unshift(item)`|adds `item` to start |
+|concat|`arr1.concat(arr2,arr3)`|Merges multiple arrays|
+|copyWithin|`fruits.copyWithin(2, 0)`|Copy to index 2, all elements from index 0:<br>Banana,Orange,Banana,Orange|
+|copyWithin|`fruits.copyWithin(2, 0, 2)`|Copy to index 2, the elements from index 0 to 2:<br>Banana,Orange,Banana,Orange,Kiwi,Papaya|
+|flat|`const myArr = [[1,2],[3,4],[5,6]];`<br>`const newArr = myArr.flat();`| creates a new array with sub-array elements concatenated to a specified depth<br>1,2,3,4,5,6|
+|flatMap|`const myArr = [1, 2, 3, 4, 5, 6];`<br>`const newArr = myArr.flatMap(x => [x, x * 10]);`|first maps all elements of an array and then creates a new array by flattening the array<br>1,10,2,20,3,30,4,40,5,50,6,60|
+|splice|`const fruits = ["Banana", "Orange", "Apple", "Mango"];`<br>`fruits.splice(2, 0, "Lemon", "Kiwi");`|`Banana,Orange,Lemon,Kiwi,Apple,Mango`<br>- The first parameter (2) defines the position **where** new elements should be **added** (spliced in).<br>- The second parameter (0) defines **how many** elements should be **removed**.<br>- The rest of the parameters ("Lemon" , "Kiwi") define the new elements to be **added**.|
+||`const fruits = ["Banana", "Orange", "Apple", "Mango"];`<br>`fruits.splice(2, 2, "Lemon", "Kiwi");`|Original Array: `Banana,Orange,Apple,Mango`<br>New Array: `Banana,Orange,Lemon,Kiwi`<br>Removed Items:`Apple,Mango`|
+|splice() to remove|`const fruits = ["Banana", "Orange", "Apple", "Mango"];`<br>`fruits.splice(0, 1);`|Orange,Apple,Mango|
+|toSpliced()|`const months = ["Jan", "Feb", "Mar", "Apr"];`<br>`const spliced = months.toSpliced(0, 1);`|keeps the main array unchanged|
+|slice|`const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];`<br>`const citrus = fruits.slice(1);`|Slice out a part of an array starting from array element 1 ("Orange"):<br>`Orange,Lemon,Apple,Mango`|
+||`const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];`<br>`const citrus = fruits.slice(3);`|`Apple,Mango`|
+||`const citrus = fruits.slice(1, 3);`|`Orange,Lemon`|

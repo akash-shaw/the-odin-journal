@@ -545,6 +545,21 @@ let welcome = (age < 18) ?
   () => alert('Hello!') :
   () => alert("Greetings!");
 ```
+### Spread syntax, Multiple Parameters
+```javascript
+const removeFromArray = function(arr, ...args) {
+    let newArr = [];
+    for(item of arr){
+        if(args.includes(item)){
+            continue;
+        }
+        else{
+            newArr.push(item);
+        }
+    }
+    return newArr;
+};
+```
 
 ### Default Parameters
 

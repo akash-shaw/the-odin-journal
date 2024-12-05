@@ -858,3 +858,85 @@ const person = {firstName:"John", lastName:"Doe", age:46};
 |slice|`const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];`<br>`const citrus = fruits.slice(1);`|Slice out a part of an array starting from array element 1 ("Orange"):<br>`Orange,Lemon,Apple,Mango`|
 ||`const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];`<br>`const citrus = fruits.slice(3);`|`Apple,Mango`|
 ||`const citrus = fruits.slice(1, 3);`|`Orange,Lemon`|
+
+
+## Loops
+
+### for..of loop
+```javascript
+const cats = ["Leopard", "Serval", "Jaguar", "Tiger", "Caracal", "Lion"];
+
+for (const cat of cats) {
+  console.log(cat);
+}
+```
+
+### for...in loop
+```javascript
+for (key in object) {
+  // executes the body for each key among object properties
+}
+```
+```javascript
+let user = {
+  name: "John",
+  age: 30,
+  isAdmin: true
+};
+
+for (let key in user) {
+  // keys
+  alert( key );  // name, age, isAdmin
+  // values for the keys
+  alert( user[key] ); // John, 30, true
+}
+```
+Apart from this `for`, `while`, `do...while` all have regular syntax.
+### break & continue
+Syntax constructs that are not expressions cannot be used with the ternary operator `?`. In particular, directives such as `break/continue` aren’t allowed there.
+```javascript
+(i > 5) ? alert(i) : continue; // continue isn't allowed here
+```
+### Labeled break & continue
+
+```javascript
+outer: for (let i = 0; i < 3; i++) {
+
+  for (let j = 0; j < 3; j++) {
+
+    let input = prompt(`Value at coords (${i},${j})`, '');
+
+    // if an empty string or canceled, then break out of both loops
+    if (!input) break outer; // (*)
+
+    // do something with the value...
+  }
+}
+
+alert('Done!');
+```
+Labels do not allow us to jump into an arbitrary place in the code.
+
+For example, it is impossible to do this:
+
+```javascript
+break label; // jump to the label below (doesn't work)
+
+label: for (...)
+```
+
+A `break` directive must be inside a code block. Technically, any labelled code block will do, e.g.:
+
+```javascript
+label: {
+  // ...
+  break label; // works
+  // ...
+}
+```
+
+…Although, 99.9% of the time `break` is used inside loops, as we’ve seen in the examples above.
+
+A `continue` is only possible from inside a loop.
+
+

@@ -645,6 +645,9 @@ greet(); // Hi there!
 ### Callback functions
 
 Functions can be passed as values. The idea is that we pass a function and expect it to be “called back” later if necessary.
+
+So, A callback is simply a function that is passed into another function as an argument.
+
 ```javascript
 function ask(question, yes, no) {
   if (confirm(question)) yes()
@@ -908,6 +911,75 @@ for (let key in user) {
 }
 ```
 Apart from this `for`, `while`, `do...while` all have regular syntax.
+
+### forEach() method
+The `forEach()` method in JavaScript is used to execute a provided function once for each element in an array (or other iterable objects like NodeLists).
+
+```javascript
+array.forEach(function(currentValue, index, array) {
+    // Code to be executed
+});
+```
+
+#### Parameters:
+
+1.  **currentValue**: The value of the current element in the array.
+2.  **index** _(Optional)_: The index of the current element.
+3.  **array** _(Optional)_: The array that `forEach` was called on.
+
+Basic usage:
+```javascript
+const numbers = [1, 2, 3, 4];
+
+numbers.forEach(function(number) {
+    console.log(number);  // Prints 1, 2, 3, 4
+});
+
+```
+
+Accessing the index and the array:
+
+```javascript
+const fruits = ['apple', 'banana', 'cherry'];
+
+fruits.forEach(function(fruit, index) {
+    console.log(`${index}: ${fruit}`);
+});
+// Output:
+// 0: apple
+// 1: banana
+// 2: cherry
+
+```
+Modifying array elements
+```javascript
+const numbers = [1, 2, 3, 4];
+
+numbers.forEach((number) => {
+    number = number * 2;
+});
+
+console.log(numbers); // [1, 2, 3, 4]
+```
+In this case, `number` is just a copy of the array element, not a reference to it. When you modify `number`, it doesn't affect the original array. This is because JavaScript passes primitive types (like numbers) **by value**.  To tackle this:
+```javascript
+const numbers = [1, 2, 3, 4];
+
+numbers.forEach((number, index, array) => {
+    array[index] = number * 2;  // Doubles each element
+});
+
+console.log(numbers);  // [2, 4, 6, 8]
+
+```
+
+
+
+> NOTE:
+> -   `forEach()` does not return a new array (like `map()`); it simply iterates over the array and performs an operation on each element.
+> -   It cannot be broken or stopped mid-loop like a `for` loop (unless using `return` or `throw` within a function).
+> -   It is not suitable for asynchronous operations (use `map()` with `Promise` or `for...of` instead).
+
 ### break & continue
 Syntax constructs that are not expressions cannot be used with the ternary operator `?`. In particular, directives such as `break/continue` aren’t allowed there.
 ```javascript
@@ -1036,7 +1108,7 @@ div.removeAttribute("id");
 ```
 > [List of all attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes).
 
-### Working with classes
+### Working with classes, classList
 
 ```javascript
 // adds class "new" to your new div
@@ -1051,7 +1123,7 @@ div.classList.toggle("active");
 ```
 It is often standard (and cleaner) to toggle a CSS style rather than adding and removing inline CSS.
 
-### Adding text content
+### Adding textContent, innerHTML
 
 ```javascript
 // creates a text node containing "Hello World!" and inserts it in div
@@ -1061,3 +1133,83 @@ div.innerHTML = "<span>Hello World!</span>";
 
 ```
 Note that using textContent is preferred over innerHTML for adding text, as innerHTML should be used sparingly to avoid potential security risks (JavaScript injection). So avoid innerHTML from user input.
+
+
+# Events Basics
+
+> [Full list of events](https://www.w3schools.com/jsref/dom_obj_event.asp).
+
+Events are actions that occur on your webpage, such as mouse-clicks or key-presses.
+
+#### Method 1 : Inline Event Attributes in HTML
+
+For specifying function attributes directly in the HTML elements.
+```javascript
+<button onclick="alert('Hello World')">Click Me</button>
+```
+This solution is less than ideal because we’re cluttering our HTML with JavaScript. Also, we can only set one “onclick” property per DOM element, so we’re unable to run multiple separate functions in response to a click event using this method.
+
+#### Method 2 : Setting Event Properties in JavaScript
+
+For using `on<eventType>` properties like `onclick` or `onmousedown` directly on DOM nodes
+
+```html
+<!-- the HTML file -->
+<button id="btn">Click Me</button>
+```
+```javascript
+// the JavaScript file
+const btn = document.querySelector("#btn");
+btn.onclick = () => alert("Hello World");
+```
+Can only have one onClick property.
+
+#### Method 3 (Preferred) : Event Listeners
+
+```html
+<!-- the HTML file -->
+<button id="btn">Click Me Too</button>
+```
+```javascript
+// the JavaScript file
+const btn = document.querySelector("#btn");
+btn.addEventListener("click", () => {
+  alert("Hello World");
+});
+```
+We can have as many event listeners as we want.
+> NOTE: Use named functions if we're going to do same thing in multiple places. If we're going to perform the action only on one event, it's better to use arrow functions.
+
+
+### Event parameter `e`
+
+The `e` parameter in event listeners represents the event object, providing details about the event and access to the target element (`e.target`). It allows dynamic responses, like modifying the target:
+```javascript
+btn.addEventListener("click", (e) => {
+  console.log(e.target); // <button  id="btn">Click Me!</button>
+  e.target.style.background = "blue"; // Changes background to blue
+});
+```
+
+### Listeners to group of nodes
+
+```html
+<div id="container">
+  <button id="one">Click Me</button>
+  <button id="two">Click Me</button>
+  <button id="three">Click Me</button>
+</div>
+```
+
+```javascript
+// buttons is a node list. It looks and acts much like an array.
+const buttons = document.querySelectorAll("button");
+
+// we use the .forEach method to iterate through each button
+buttons.forEach((button) => {
+  // and for each one we add a 'click' listener
+  button.addEventListener("click", () => {
+    alert(button.id);
+  });
+});
+```

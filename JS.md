@@ -560,6 +560,7 @@ const removeFromArray = function(arr, ...args) {
     return newArr;
 };
 ```
+> For more info, [refer this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax).
 
 ### Default Parameters
 
@@ -955,3 +956,108 @@ label: {
 A `continue` is only possible from inside a loop.
 
 
+# DOM
+
+When your HTML code is parsed by a web browser, it is converted to the **DOM - Document Obejct Model**.
+
+> NOTE: JavaScript does _not_ alter your HTML, but the DOM - your HTML file will look the same, but the JavaScript changes what the browser renders.
+
+> Your JavaScript, for the most part, is run whenever the JS file is run or when the script tag is encountered in the HTML. If you are including your JavaScript at the top of your file, many of these DOM manipulation methods will not work because the JS code is being run _before_ the nodes are created in the DOM. The simplest way to fix this is to include your JavaScript at the bottom of your HTML file so that it gets run after the DOM nodes are parsed and created.
+Alternatively, you can link the JavaScript file in the `<head>` of your HTML document. Use the `<script>` tag with the `src` attribute containing the path to the JS file, and include the `defer` keyword to load the file _after_ the HTML is parsed, as such:
+> ```html
+> <head>
+ > <script src="js-file.js" defer></script>
+> </head>
+> ```
+
+
+### Query selectors
+
+-   `element.querySelector(selector)` - returns a reference to the first match of _selector_.
+-   `element.querySelectorAll(selectors)` - returns a “NodeList” containing references to all of the matches of the _selectors_.
+- `querySelectorAll` returns a **NodeList** not an array. NodeList has several array methods missing.
+
+### Element creation
+
+-   `document.createElement(tagName, [options])` - creates a new element of tag type tagName. 
+```javascript
+ const div = document.createElement("div");
+```
+This function does NOT put your new element into the DOM - it creates it in memory. This is so that you can manipulate the element (by adding styles, classes, ids, text, etc.) before placing it on the page. To add-
+
+### Append elements
+
+-   `parentNode.appendChild(childNode)` - appends _childNode_ as the last child of _parentNode_.
+-   `parentNode.insertBefore(newNode, referenceNode)` - inserts _newNode_ into _parentNode_ before _referenceNode_.
+
+### Remove elements
+
+-   `parentNode.removeChild(child)` - removes _child_ from _parentNode_ on the DOM and returns a reference to _child_.
+
+### Adding inline style
+```javascript
+// adds the indicated style rule to the element in the div variable
+div.style.color = "blue";
+
+// adds several style rules
+div.style.cssText = "color: blue; background: white;";
+
+// adds several style rules
+div.setAttribute("style", "color: blue; background: white;");
+
+
+// dot notation with kebab case: doesn't work as it attempts to subtract color from div.style.background
+// equivalent to: div.style.background - color
+div.style.background-color;
+
+// dot notation with camelCase: works, accesses the div's background-color style
+div.style.backgroundColor;
+
+// bracket notation with kebab-case: also works
+div.style["background-color"];
+
+// bracket notation with camelCase: also works
+div.style["backgroundColor"];
+
+```
+
+### Editing attributes
+
+```javascript
+// if id exists, update it to 'theDiv', else create an id with value "theDiv"
+div.setAttribute("id", "theDiv");
+
+// returns value of specified attribute, in this case "theDiv"
+div.getAttribute("id");
+
+// removes specified attribute
+div.removeAttribute("id");
+
+```
+> [List of all attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes).
+
+### Working with classes
+
+```javascript
+// adds class "new" to your new div
+div.classList.add("new");
+
+// removes "new" class from div
+div.classList.remove("new");
+
+// if div doesn't have class "active" then add it, or if it does, then remove it
+div.classList.toggle("active");
+
+```
+It is often standard (and cleaner) to toggle a CSS style rather than adding and removing inline CSS.
+
+### Adding text content
+
+```javascript
+// creates a text node containing "Hello World!" and inserts it in div
+div.textContent = "Hello World!";
+// renders the HTML inside div
+div.innerHTML = "<span>Hello World!</span>";
+
+```
+Note that using textContent is preferred over innerHTML for adding text, as innerHTML should be used sparingly to avoid potential security risks (JavaScript injection). So avoid innerHTML from user input.

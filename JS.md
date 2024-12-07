@@ -545,22 +545,59 @@ let welcome = (age < 18) ?
   () => alert('Hello!') :
   () => alert("Greetings!");
 ```
-### Spread syntax, Multiple Parameters
-```javascript
-const removeFromArray = function(arr, ...args) {
-    let newArr = [];
-    for(item of arr){
-        if(args.includes(item)){
-            continue;
-        }
-        else{
-            newArr.push(item);
-        }
+### Dynamic parameters
+
+1.  **Declared Fewer/ More Parameters**  
+    If you declare fewer parameters than provided, the extra arguments are ignored.
+    And in case of more pararmeters, rest are taken as `undefined`.
+    
+    ```javascript
+    function add(a, b) {
+        console.log(a); // 1
+        console.log(b); // 2
     }
-    return newArr;
-};
-```
-> For more info, [refer this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax).
+    add(1, 2, 3, 4); // Extra arguments (3, 4) are ignored. Shows 1 2
+    add(1); // Shows  1 undefined
+    ```
+    
+2.  **Using `arguments` Object**  
+    For non-arrow functions, `arguments` can capture all arguments passed.
+    
+    ```javascript
+    function add() {
+        console.log(arguments); // Outputs: [1, 2, 3, 4]
+    }
+    add(1, 2, 3, 4);
+    
+    ```
+    
+3.  **Using the Rest Operator (`...args`)**  
+    `...args` gathers extra arguments into an array. Works in both regular and arrow functions.
+    `...` is called [spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_synta).
+    
+    ```javascript
+    function add(a, ...args) {
+        console.log(a);        // 1
+        console.log(args);     // [2, 3, 4]
+    }
+    add(1, 2, 3, 4);
+    
+    ```
+    
+	```javascript
+	const removeFromArray = function(arr, ...args) {
+	    let newArr = [];
+	    for(item of arr){
+	        if(args.includes(item)){
+	            continue;
+	        }
+	        else{
+	            newArr.push(item);
+	        }
+	    }
+	    return newArr;
+	};
+	```
 
 ### Default Parameters
 
@@ -921,7 +958,7 @@ array.forEach(function(currentValue, index, array) {
 });
 ```
 
-#### Parameters:
+ Parameters:
 
 1.  **currentValue**: The value of the current element in the array.
 2.  **index** _(Optional)_: The index of the current element.
@@ -1135,11 +1172,13 @@ div.innerHTML = "<span>Hello World!</span>";
 Note that using textContent is preferred over innerHTML for adding text, as innerHTML should be used sparingly to avoid potential security risks (JavaScript injection). So avoid innerHTML from user input.
 
 
-# Events Basics
+# Events
 
 > [Full list of events](https://www.w3schools.com/jsref/dom_obj_event.asp).
 
 Events are actions that occur on your webpage, such as mouse-clicks or key-presses.
+
+### Adding eventListener
 
 #### Method 1 : Inline Event Attributes in HTML
 
@@ -1213,3 +1252,4 @@ buttons.forEach((button) => {
   });
 });
 ```
+

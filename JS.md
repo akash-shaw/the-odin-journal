@@ -472,12 +472,30 @@ switch (a) {
 If you're writing a function and want to support optional parameters, you can specify default values by adding `=` after the name of the parameter, followed by the default value:
 
 ```javascript
+//New Method
+
 function hello(name = "Chris") {
   console.log(`Hello ${name}!`);
 }
 
 hello("Ari"); // Hello Ari!
 hello(); // Hello Chris!
+
+
+// Old Method
+
+function hello(name) {
+  if(name == undefined){
+  name = "Chris";
+}
+  console.log(`Hello ${name}!`);
+}
+
+// OR ||
+function hello(name) {
+  name = name || "Chris";
+  console.log(`Hello ${name}!`);
+}
 
 ```
 
@@ -599,33 +617,7 @@ let welcome = (age < 18) ?
 	};
 	```
 
-### Default Parameters
-
-```javascript
-// New Method
-function showMessage(from, text = "no text given") {
-  alert( from + ": " + text );
-}
-showMessage("Ann"); // Ann: no text given
-showMessage("Ann", "Hello"); // Ann: Hello
-
-// Old Method
-
-function showMessage(from, text) {
-  if (text === undefined) {
-    text = 'no text given';
-  }
-  alert( from + ": " + text );
-}
-
-// OR ||
-function showMessage(from, text) {
-  text = text || 'no text given';
-  ...
-}
-```
-
-### nullish coalescing operator
+### Nullish coalescing operator
 
 it’s better when most falsy values, such as `0`, should be considered “normal”
 

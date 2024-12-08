@@ -1431,5 +1431,38 @@ track.addEventListener('mousemove', (e) => {
 });
 
 ```
-| ![enter image description here](https://www.javascripttutorial.net/wp-content/uploads/2020/02/javascript-mouse-event-screenX-screenY.png) | ![enter image description here](https://www.javascripttutorial.net/wp-content/uploads/2020/02/javascript-mouse-event-clientX-clientY.png) |
+| ![screenX/Y](https://www.javascripttutorial.net/wp-content/uploads/2020/02/javascript-mouse-event-screenX-screenY.png) | ![clientX/Y](https://www.javascripttutorial.net/wp-content/uploads/2020/02/javascript-mouse-event-clientX-clientY.png) |
 |--|--|
+
+
+## Keyborad Events
+
+
+
+1.  **keydown** – Fires when a key is pressed and repeats while holding it down.
+2.  **keyup** – Fires when a key is released.
+3.  **keypress** – Fires for character keys (`a, b, c`), not for non-character keys (e.g., arrows). Repeats when holding a key. _(Deprecated in modern browsers)_
+
+**Sequence for character keys:**  
+`keydown → keypress → keyup`  
+**Sequence for non-character keys:**  
+`keydown → keyup`
+
+    
+```javascript
+let input = document.getElementById('message');
+input.addEventListener("keydown", (e) => { /* handle */ });
+input.addEventListener("keyup", (e) => { /* handle */ });
+```
+    
+
+#### Event Properties:
+
+-   `key` – Returns the character of the key pressed (e.g., `z`).
+-   `code` – Represents the physical key on the keyboard (e.g., `KeyZ`).
+
+```javascript
+input.addEventListener('keydown', (e) => {
+    console.log(`key=${e.key}, code=${e.code}`);
+});
+```

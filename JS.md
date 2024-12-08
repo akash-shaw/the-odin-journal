@@ -1245,3 +1245,52 @@ buttons.forEach((button) => {
 });
 ```
 
+
+## Event Flow
+
+
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS Event Demo</title>
+</head>
+<body>
+    <div id="container">
+        <button id='btn'>Click Me!</button>
+    </div>
+</body>
+```
+```javascript
+let btn = document.querySelector('#btn');
+
+btn.addEventListener('click',() => {
+    alert('It was clicked!');
+});
+```
+
+By default, event listeners in JavaScript listen during the **bubbling phase**, not the capturing phase.
+
+![Event Flow Diagram](https://www.javascripttutorial.net/wp-content/uploads/2020/02/JavaScript-DOM-Level-2-Event.png)
+
+**Capturing Phase** &rarr; **Target Phase** &rarr; **Bubbling Phase** 
+
+### Event methods
+The following table shows the most commonly used properties and methods of the `event` object:
+
+Property / Method | Description
+--- | ---
+`bubbles` | true if the event bubbles
+`cancelable` | true if the default behavior of the event can be canceled
+`currentTarget` | the current element on which the event is firing
+`defaultPrevented` | return true if the `preventDefault()` has been called
+`detail` | more information about the event
+`eventPhase` | 1 for capturing phase, 2 for target, 3 for bubbling
+`preventDefault()` | cancel the default behavior for the event. This method is only effective if the cancelable property is true
+`stopPropagation()` | cancel any further event capturing or bubbling. This method only can be used if the bubbles property is true.
+|`stopImmediatePropagation()`|stop the event from being handled by any other handlers in the current target. Also stops further event capturing or bubbling.|
+`target` | the target element of the event
+`type` | the type of event that was fired
+
+Note that the `event` object is only accessible inside the event handler. Once all the event handlers have been executed, the event object is automatically destroyed.

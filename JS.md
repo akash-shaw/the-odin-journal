@@ -1272,9 +1272,45 @@ btn.addEventListener('click',() => {
 
 By default, event listeners in JavaScript listen during the **bubbling phase**, not the capturing phase.
 
+
 ![Event Flow Diagram](https://www.javascripttutorial.net/wp-content/uploads/2020/02/JavaScript-DOM-Level-2-Event.png)
 
 **Capturing Phase** &rarr; **Target Phase** &rarr; **Bubbling Phase** 
+
+### Options in `addEventListener`:
+
+```javascript
+element.addEventListener(type, operation, options);
+// example
+element.addEventListener('click', handler, { capture: true, once: true });
+```
+
+1.  **`capture`** (Boolean)
+    
+    -   Determines if the event is captured during the capturing phase (before bubbling).
+    -   Default: `false`.
+        
+	``` javascript
+	element.addEventListener('click', handler, { capture: true }); 
+	```      
+2.  **`once`** (Boolean)
+    
+    -   Ensures the event listener is triggered only once. After being invoked, it is automatically removed.
+    -   Default: `false`.
+        
+	```javascript
+	element.addEventListener('click', handler, { once: true });
+	```
+	silimar to:
+	```javascript
+	function handler(event) {
+	    console.log('Clicked!');
+	    element.removeEventListener('click', handler); // Manually remove the listener
+	}
+
+	element.addEventListener('click', handler);
+	```
+	
 
 ### Event methods
 The following table shows the most commonly used properties and methods of the `event` object:

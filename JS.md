@@ -1439,9 +1439,9 @@ track.addEventListener('mousemove', (e) => {
 
 
 
-1.  **keydown** – Fires when a key is pressed and repeats while holding it down.
-2.  **keyup** – Fires when a key is released.
-3.  **keypress** – Fires for character keys (`a, b, c`), not for non-character keys (e.g., arrows). Repeats when holding a key. _(Deprecated in modern browsers)_
+1.  **`keydown`** – Fires when a key is pressed and repeats while holding it down.
+2.  **`keyup`** – Fires when a key is released.
+3.  **`keypress`** – Fires for character keys (`a, b, c`), not for non-character keys (e.g., arrows). Repeats when holding a key. _(Deprecated in modern browsers)_
 
 **Sequence for character keys:**  
 `keydown → keypress → keyup`  
@@ -1458,11 +1458,62 @@ input.addEventListener("keyup", (e) => { /* handle */ });
 
 #### Event Properties:
 
--   `key` – Returns the character of the key pressed (e.g., `z`).
--   `code` – Represents the physical key on the keyboard (e.g., `KeyZ`).
+-   **`key`** – Returns the character of the key pressed (e.g., `z`).
+-   **`code`** – Represents the physical key on the keyboard (e.g., `KeyZ`).
 
 ```javascript
 input.addEventListener('keydown', (e) => {
     console.log(`key=${e.key}, code=${e.code}`);
 });
+```
+
+
+## Event Delegation
+
+The event delegation refers to the technique of using event bubbling to handle events at a higher level (Parent element) in the DOM than the element on which the event originated (Child).
+```html
+<ul id="menu">
+    <li><a id="home">home</a></li>
+    <li><a id="dashboard">Dashboard</a></li>
+    <li><a id="report">report</a></li>
+</ul>
+```
+Instead of doing (adding event listener to each child)
+```javascript
+let home = document.querySelector('#home');
+home.addEventListener('click',(event) => {
+    console.log('Home menu item was clicked');
+});
+
+let dashboard = document.querySelector('#dashboard');
+dashboard.addEventListener('click',(event) => {
+    console.log('Dashboard menu item was clicked');
+});
+
+let report = document.querySelector('#report');
+report.addEventListener('click',(event) => {
+    console.log('Report menu item was clicked');
+});
+
+```
+do this instead (event listener only on parent, use **event bubbling**)
+```javascript
+let menu = document.querySelector('#menu');
+
+menu.addEventListener('click', (event) => {
+    let target = event.target;
+
+    switch(target.id) {
+        case 'home':
+            console.log('Home menu item was clicked');
+            break;
+        case 'dashboard':
+            console.log('Dashboard menu item was clicked');
+            break;
+        case 'report':
+            console.log('Report menu item was clicked');
+            break;
+    }
+});
+
 ```

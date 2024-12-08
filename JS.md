@@ -1294,3 +1294,144 @@ Property / Method | Description
 `type` | the type of event that was fired
 
 Note that the `event` object is only accessible inside the event handler. Once all the event handlers have been executed, the event object is automatically destroyed.
+
+
+## Page Load Events
+
+
+When you open a page, the following events occur in sequence:
+
+-   [DOMContentLoaded](https://www.javascripttutorial.net/javascript-dom/javascript-domcontentloaded/) – the browser fully loaded HTML and completed building the DOM tree. However, it hasn’t loaded external resources like stylesheets and images. In this event, you can start selecting DOM nodes or initialize the interface.
+-   [load](https://www.javascripttutorial.net/javascript-dom/javascript-onload/) – the browser fully loaded the HTML and external resources like images and stylesheets.
+
+When you leave the page, the following events fire in sequence:
+
+-   [beforeunload](https://www.javascripttutorial.net/javascript-dom/javascript-beforeunload-event/) – fires before the page and resources are unloaded. You can use this event to show a confirmation dialog to confirm if you want to leave the page. By doing this, you can prevent data loss in case the user is filling out a form and accidentally clicks a link that navigates to another page.
+-   [unload](https://www.javascripttutorial.net/javascript-dom/javascript-unload/) – fires when the page has completely unloaded. You can use this event to send the analytic data or to clean up resources.
+
+```javascript
+addEventListener('DOMContentLoaded', (event) => {
+    console.log('The DOM is fully loaded.');
+});
+
+addEventListener('load', (event) => {
+    console.log('The page is fully loaded.');
+});
+
+addEventListener('beforeunload', (event) => {
+    event.preventDefault();
+    event.returnValue = ''; // Show a confirmation dialog in Chrome
+});
+
+addEventListener('unload', (event) => {
+    console.log('The page is completely unloaded.');
+});
+
+```
+
+## Mouse Events
+
+
+### Mouse Events Overview
+
+-   **`mousedown`**: Fires when a mouse button is pressed on an element.
+-   **`mouseup`**: Fires when a pressed mouse button is released.
+-   **`click`**: Fires after one `mousedown` + one `mouseup`.
+    -   Skips firing if the button is pressed, moved off, or released outside the element.
+
+---
+
+### `dblclick`
+
+-   Fires on a double-click.
+-   Sequence:  
+    `mousedown` → `mouseup` → `click` → `mousedown` → `mouseup` → `click` → `dblclick`
+
+----------
+
+### `mousemove`
+
+-   Fires repeatedly as the mouse moves over an element.
+-   **Optimization Tip**: Add/remove listeners only when needed to avoid performance issues.
+
+----------
+
+### `mouseover` / `mouseout`
+
+-   **`mouseover`**: Fires when the mouse enters an element's boundaries.
+-   **`mouseout`**: Fires when the mouse leaves an element's boundaries.
+
+----------
+
+### `mouseenter` / `mouseleave`
+
+-   **`mouseenter`**: Like `mouseover`, but does not fire on child elements.
+-   **`mouseleave`**: Like `mouseout`, but does not fire when exiting child elements.
+-   **Does not bubble.**
+
+----------
+
+### `wheel`
+- Fires when the mouse wheel or touchpad scrolls.
+-   **`event.deltaY`**: Vertical scroll amount (positive for down, negative for up).
+-   **`event.deltaX`**: Horizontal scroll amount (positive for right, negative for left).
+-   **`event.deltaMode`**: Units of scrolling:
+    -   `0`: Pixels (default).
+    -   `1`: Lines.
+    -   `2`: Pages.
+```javascript
+body.addEventListener('wheel', (e) => {
+  console.log(`Scrolled: deltaY = ${e.deltaY}, deltaX = ${e.deltaX}`);
+});
+```
+
+---
+
+### Detecting Mouse Buttons
+
+-   **`event.button` values**:
+    -   `0`: Left button
+    -   `1`: Middle button (wheel)
+    -   `2`: Right button
+    -   `3`: Browser Back
+    -   `4`: Browser Forward
+
+**Example**: Disable context menu for right-click:
+
+```javascript
+btn.addEventListener('contextmenu', (e) => e.preventDefault());
+
+```
+
+----------
+
+### Modifier Keys
+
+-   **Keys**: `shift`, `ctrl`, `alt`, `meta` (Command on Mac).
+-   **`event.<key>`**: Boolean (`true` if pressed).
+
+```javascript
+btn.addEventListener('click', (e) => {
+  if (e.ctrlKey) console.log('Ctrl key pressed');
+});
+
+```
+
+----------
+
+### Screen & Client Coordinates
+
+-   **`screenX`, `screenY`**: Mouse position relative to the screen.
+-   **`clientX`, `clientY`**: Position within the application’s client area.
+
+```javascript
+track.addEventListener('mousemove', (e) => {
+  console.log(`Screen: (${e.screenX}, ${e.screenY})`);
+  console.log(`Client: (${e.clientX}, ${e.clientY})`);
+});
+
+```
+
+
+
+   

@@ -1431,7 +1431,5 @@ track.addEventListener('mousemove', (e) => {
 });
 
 ```
-
-
-
-   
+| ![enter image description here](https://www.javascripttutorial.net/wp-content/uploads/2020/02/javascript-mouse-event-screenX-screenY.png) | ![enter image description here](https://www.javascripttutorial.net/wp-content/uploads/2020/02/javascript-mouse-event-clientX-clientY.png) |
+|--|--|

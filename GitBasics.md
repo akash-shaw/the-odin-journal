@@ -36,6 +36,16 @@ git branch -d <branchname>	 #delete branch
 #merging branches
 git checkout <target-branch>	#eg. main
 git merge <source-branch>		#eg. dev
+#NOTE: git merge will merge source-branch to the brach we're currently in
+#NOTE: merge conflicts may arrive, solve them and then merge
+
+#deleting local branch
+git -d <branch-name>	#when already merged with main
+git -D <branch-name>	#when not merged with main
+
+#remote branches
+git push origin <branch-name>	#push new branch
+git push origin --delete <branch-name>	#delete remote branch
 
 #renaming branches
 git branch -m <new-branch-name>		#current branch

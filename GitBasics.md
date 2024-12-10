@@ -40,8 +40,8 @@ git merge <source-branch>		#eg. dev
 #NOTE: merge conflicts may arrive, solve them and then merge
 
 #deleting local branch
-git -d <branch-name>	#when already merged with main
-git -D <branch-name>	#when not merged with main
+git branch -d <branch-name>	#when already merged with main
+git branch -D <branch-name>	#when not merged with main
 
 #remote branches
 git push origin <branch-name>	#push new branch

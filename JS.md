@@ -1277,7 +1277,7 @@ By default, event listeners in JavaScript listen during the **bubbling phase**, 
 
 **Capturing Phase** &rarr; **Target Phase** &rarr; **Bubbling Phase** 
 
-### Options in `addEventListener`:
+### Options in `addEventListener`
 
 ```javascript
 element.addEventListener(type, operation, options);
@@ -1592,7 +1592,7 @@ let customEvent = new Event('customEvent', {
 	});
 ```
 
-### Event class tree:
+### Event class tree
 ```
 Event (base type)
     |
@@ -1658,3 +1658,184 @@ function addBorder(elem) {
 highlight(note, addBorder);
 ```
 
+
+
+# Objects
+
+collection of `key:value` pairs, conatined inside `{}`
+
+> NOTE: Trailing comma is helpful, ie comma after last property
+
+> NOTE: Empty property declaration not allowed. do `property: null` if you need
+
+### Create object
+empty object
+```javascript
+let user = new Object(); // "object constructor" syntax
+let user = {};  // "object literal" syntax
+```
+another example
+```javascript
+let user = {}; // creates empty object
+user.name = "John"; // adds property name
+user.surname = "Smith"; // adds property surname
+user.name = "Pete"; // update property name
+delete user.name; // delete property name
+```
+### Deleting properties
+
+```javascript
+delete user.age;
+```
+
+
+### Multiword properties
+
+```javascript
+let user = {
+  name: "John",
+  age: 30,
+  "likes birds": true  // multiword property name must be quoted
+};
+```
+
+### Square brackets
+Must for multi-word properties.
+```javascript
+let user = {};
+
+// set
+user["likes birds"] = true;
+
+// get
+alert(user["likes birds"]); // true
+
+// delete
+delete user["likes birds"];
+```
+Square brackets support all type of strings, whereas dot (`.`) operator doesn't
+```javascript
+let user = {
+  name: "John",
+  age: 30,
+};
+
+let key = "name";
+alert( user.key ) // undefined
+alert( user[key] ) // John
+```
+
+### Computed properties
+
+```javascript
+let fruit = prompt("Which fruit to buy?", "apple");
+
+let bag = {
+  [fruit]: 5, // the name of the property is taken from the variable fruit
+};
+
+alert( bag.apple ); // 5 if fruit="apple"
+```
+```javascript
+let fruit = 'apple';
+let bag = {
+  [fruit + 'Computers']: 5 // bag.appleComputers = 5
+};
+```
+
+### Property value shorthand
+The use of this is so common
+```javascript
+function makeUser(name, age) {
+  return {
+    name: name,
+    age: age,
+    // ...other properties
+  };
+}
+
+let user = makeUser("John", 30);
+alert(user.name); // John
+```
+that there is a shorthand to do the same
+```javascript
+function makeUser(name, age) {
+  return {
+    name, // same as name: name
+    age,  // same as age: age
+    // ...
+  };
+}
+```
+```javascript
+let user = {
+  name,  // same as name:name
+  age: 30
+};
+```
+### Property names limitations
+
+For an object property, there’s no such restriction of the language-reserved words like “for”, “let”, “return” etc.
+```javascript
+let obj = {
+  0: "test" // same as "0": "test"
+};
+
+// both alerts access the same property (the number 0 is converted to string "0")
+alert( obj["0"] ); // test
+alert( obj[0] ); // test (same property)
+// obj[0] does not mean the first property
+```
+
+### Property existence check
+```javascript
+let user = { name: "John", age: 30 };
+
+alert( "age" in user ); // true, user.age exists
+alert( "blabla" in user ); // false, user.blabla doesn't exist
+```
+
+### for...in iterator
+```javascript
+let user = {
+  name: "John",
+  age: 30,
+  isAdmin: true
+};
+
+for (let key in user) {
+  // keys
+  alert( key );  // name, age, isAdmin
+  // values for the keys
+  alert( user[key] ); // John, 30, true
+}
+```
+
+### Check empty object
+```javascript
+function isEmpty(obj) {
+  for (let key in obj) {
+    // if the loop has started, there is a property
+    return false;
+  }
+  return true;
+}
+```
+
+### Order of properties
+
+integer properties are sorted, others appear in creation order
+
+```javascript
+let  obj  = {
+	3: "three",
+	hola: "pojo",
+	1: "one",
+	aah: "oni",
+	"2": "two",
+};
+console.log(obj); 
+// { '1': 'one', '2': 'two', '3': 'three', hola: 'pojo', aah: 'oni' }
+// same order followed in for..in
+```
+> FACT: this is the reason phone codes have "+" in front of them

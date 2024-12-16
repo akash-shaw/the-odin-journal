@@ -864,7 +864,7 @@ let x = average(10, 20);
 ```
 ![JavaScript Call Stack illustration](https://www.javascripttutorial.net/wp-content/uploads/2019/12/JavaScript-Call-Stack.png)
 
-## Arrays
+# Arrays
 
 ```javascript
 const cars = ["Saab", "Volvo", "BMW"];
@@ -880,18 +880,19 @@ Objects use **names** to access its "members". In this example, `person.firstNam
 ```javascript
 const person = {firstName:"John", lastName:"Doe", age:46};
 ```
-### Array Methods
+## Array Methods
 
 | Method | Syntax | Use |
 |--|--|--|
 |index|`arr[i]`|to access i'th index. -ve not allowed|
 |at|`arr.at(i)`|to accesss index. -ve allowed|
 | lenght | `arr.length` ||
-|sort|`arr.sort()`|sorts the array|
+|sort|`arr.sort()`|sorts the array in lexographical order converting to string|
+|reverse|`arr.reverse()`|modifies main array, also returns the reversed array|
 |tostring|`const fruits = ["Banana", "Orange", "Apple", "Mango"];`<br>`console.log(fruits.toString())`|Banana,Orange,Apple,Mango|
 |join|`console.log(fruits.join(" * "))`|Banana * Orange * Apple * Mango|
 |push|`arr.push(item)`|add new element to array. LIFO|
-|push|`arr.pop()`|pops last entered element. LIFO|
+|pop|`arr.pop()`|pops last entered element. LIFO|
 |shift|`fruits.shift()`|removes `"Banana"`, Similar to Dequeue, FIFO |
 |unshift|`fruits.unshift(item)`|adds `item` to start |
 |concat|`arr1.concat(arr2,arr3)`|Merges multiple arrays|
@@ -903,12 +904,298 @@ const person = {firstName:"John", lastName:"Doe", age:46};
 ||`const fruits = ["Banana", "Orange", "Apple", "Mango"];`<br>`fruits.splice(2, 2, "Lemon", "Kiwi");`|Original Array: `Banana,Orange,Apple,Mango`<br>New Array: `Banana,Orange,Lemon,Kiwi`<br>Removed Items:`Apple,Mango`|
 |splice() to remove|`const fruits = ["Banana", "Orange", "Apple", "Mango"];`<br>`fruits.splice(0, 1);`|Orange,Apple,Mango|
 |toSpliced()|`const months = ["Jan", "Feb", "Mar", "Apr"];`<br>`const spliced = months.toSpliced(0, 1);`|keeps the main array unchanged|
-|slice|`const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];`<br>`const citrus = fruits.slice(1);`|Slice out a part of an array starting from array element 1 ("Orange"):<br>`Orange,Lemon,Apple,Mango`|
+|slice|`const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];`<br>`const citrus = fruits.slice(1);`|- Slice out a part of an array starting from array element 1 ("Orange"):<br>`Orange,Lemon,Apple,Mango`<br>- Does not modify main array|
 ||`const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];`<br>`const citrus = fruits.slice(3);`|`Apple,Mango`|
 ||`const citrus = fruits.slice(1, 3);`|`Orange,Lemon`|
+|indexOf|`arr.indexOf(item, from)`|looks for `item` starting from index `from`, and returns the index where it was found, otherwise `-1`. `from` defaults to `0`. uses `===`|
+|includes|`arr.includes(item, from)`|looks for `item` starting from index `from`, returns `true` if found. `from` defaults to `0`.|
+|lastIndexOf|`arr.lastIndexOf(item, from)`|same as `indexOf`, just checks right to left.|
+|find|`let result = arr.find(function(item, index, array) {});`|returns `true`/`false`|
+|findIndex|`let result = arr.findIndex(callback);`|same as `find`. returns index if found and `-1` if not.|
+|lastIndexof|`let result = arr.lastIndexOf(callback);`|same as `findIndex`, returns last index if found, `-1` if not|
+> NOTE
+> `includes` correctly handles `NaN`, unlike `indexOf`
+> ```javascript
+> const arr = [NaN];
+> alert( arr.indexOf(NaN) ); // -1 (wrong, should be 0)
+> alert( arr.includes(NaN) );// true (correct)
+> ```
 
 
-## Loops
+### Splice
+```javascript
+arr.splice(start[, deleteCount, elem1, ..., elemN])
+```
+It modifies `arr` starting from the index `start`: removes `deleteCount` elements and then inserts `elem1, ..., elemN` at their place. Returns the array of removed elements.
+```javascript
+let arr = ["I", "study", "JavaScript", "right", "now"];
+
+// remove 3 first elements and replace them with another
+arr.splice(0, 3, "Let's", "dance");
+
+alert( arr ) // now ["Let's", "dance", "right", "now"]
+
+// Or we can also do
+let removed = aarr.splice(0, 3, "Let's", "dance");
+alert( removed ); // [ 'I', 'study', 'JavaScript' ]
+alert ( arr ); // ["Let's", "dance", "right", "now"]
+```
+Negative index alowed too
+```javascript
+let arr = [1, 2, 5];
+
+arr.splice(-1, 0, 3, 4);
+
+alert( arr ); // 1,2,3,4,5
+```
+### Sort
+Sorts in lexographical order after converting to string
+```javascript
+let arr = [ 1, 2, 15 ];
+
+arr.sort();
+
+alert( arr );  // 1, 15, 2
+```
+to sort in our own order, we have to use callback
+```javascript
+function compareNumeric(a, b) {
+  if (a > b) return 1;
+  if (a == b) return 0;
+  if (a < b) return -1;
+}
+
+let arr = [ 1, 2, 15 ];
+
+arr.sort(compareNumeric);
+
+alert(arr);  // 1, 2, 15
+```
+Actually, a comparison function is only required to return a positive number to say “greater” and a negative number to say “less”.
+```javascript
+let arr = [ 1, 2, 15 ];
+
+arr.sort( (a, b) => a - b );
+
+alert(arr);  // 1, 2, 15
+```
+> NOTE: Use localCompare for strings
+```javascript
+let countries = ['Österreich', 'Andorra', 'Vietnam'];
+
+alert( countries.sort( (a, b) => a > b ? 1 : -1) ); // Andorra, Vietnam, Österreich (wrong)
+
+alert( countries.sort( (a, b) => a.localeCompare(b) ) ); // Andorra,Österreich,Vietnam (correct!)
+```
+
+### Split & join
+
+The str.split(delim) method splits the string into an array by the given delimiter `delim`.
+```javascript
+let names = 'Bilbo, Gandalf, Nazgul';
+
+let arr = names.split(', ');
+
+for (let name of arr) {
+  alert( `A message to ${name}.` ); // A message to Bilbo  (and other names)
+}
+```
+The `split` method has an optional second numeric argument – a limit on the array length. If it is provided, then the extra elements are ignored. In practice it is rarely used though:
+
+```javascript
+let arr = 'Bilbo, Gandalf, Nazgul, Saruman'.split(', ', 2);
+
+alert(arr); // Bilbo, Gandalf
+```
+The call to `split(s)` with an empty `s` would split the string into an array of letters:
+
+```javascript
+let str = "test";
+
+alert( str.split('') ); // t,e,s,t
+```
+The call `arr.join(glue)` does the reverse to `split`. It creates a string of `arr` items joined by `glue` between them.
+
+
+```javascript
+let arr = ['Bilbo', 'Gandalf', 'Nazgul'];
+
+let str = arr.join(';'); // glue the array into a string using ;
+
+alert( str ); // Bilbo;Gandalf;Nazgul
+```
+##  More Arrays Methods
+
+> [cool, compact resource](https://javascript.info/array-methods).
+
+### Map
+takes a callback function passes each element to it
+```javascript
+function addOne(num) {
+  return num + 1;
+}
+const arr = [1, 2, 3, 4, 5];
+const mappedArr = arr.map(addOne);
+console.log(mappedArr); // Outputs [2, 3, 4, 5, 6]
+```
+```javascript
+const mappedArr = arr.map((num) => num + 1);
+```
+
+### Filter
+The `filter` method expects the `callback` to return either `true` or `false`. If it returns `true`, the value is included in the output array, if false it's not.
+```javascript
+function isOdd(num) {
+  return num % 2 !== 0;
+}
+const arr = [1, 2, 3, 4, 5];
+const oddNums = arr.filter(isOdd);
+console.log(oddNums); // Outputs [1, 3, 5];
+console.log(arr); // Outputs [1, 2, 3, 4, 5], original array is not affected
+```
+
+### Reduce
+```javascript
+let value = arr.reduce(function(accumulator, item, index, array) {
+  // ...
+}, [initial]);
+```
+-   `accumulator` – is the result of the previous function call, equals `initial` the first time (if `initial` is provided).
+- if there’s no initial, then `reduce` takes the first element of the array as the initial value and starts the iteration from the 2nd element.
+-   `item` – is the current array item.
+-   `index` – is its position.
+-   `array` – is the array.
+- After last item it returns next `accumulator`.
+```javascript
+const arr = [1, 2, 3, 4, 5];
+const productOfAllNums = arr.reduce((total, currentItem) => {
+  return total * currentItem;
+}, 1);
+// the function can also be written as 
+// (total, currentItem) => total * currentItem
+
+console.log(productOfAllNums); // Outputs 120;
+console.log(arr); // Outputs [1, 2, 3, 4, 5]
+
+// if initialValue given 10, the output would be 1200
+
+```
+
+
+### reduceRight
+> NOTE The method [arr.reduceRight](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduceRight) does the same but goes from right to left
+
+
+
+
+
+### Map, Filter, Reduce Together
+So what `.reduce()` will do, is it will once again go through every element in `arr` and apply the `callback` function to it. It then changes `total`, without actually changing the array itself. After it’s done, it returns `total`.
+
+![Image illustrating all the methods](https://static.observableusercontent.com/thumbnail/bea194824f0d5842addcb7910bb488795c6f80f143ab5332b28a317ebcecd603.jpg)
+
+Example:
+```javascript
+// Calculate sum of all even numbers multiplied by 3
+
+function  sumOfTripledEvens(array) {
+	let  sum  =  0;
+	for (let  i  =  0; i  <  array.length; i++) {
+		// Step 1: If the element is an even number
+		if (array[i] %  2  ===  0) {
+			// Step 2: Multiply this number by three
+			const  tripleEvenNumber  =  array[i] *  3;
+			// Step 3: Add the new number to the total
+			sum  +=  tripleEvenNumber;
+		}
+	}
+	return  sum;
+}
+
+// This can be done as
+
+function  arrayMethodMagic(array){
+	return  array
+			.filter( item=>  item%2==0 )
+			.map( item=>  item*3 )
+			.reduce( (total,currentItem)=>  total+currentItem );
+}
+
+let  arr  = [1,2,3,4,5];
+
+console.log(sumOfTripledEvens(arr)); // 18
+console.log(arrayMethodMagic(arr)); // 18
+
+```
+
+### Array.isArray
+
+Arrays do not form a separate language type. They are based on objects.
+
+So `typeof` does not help to distinguish a plain object from an array:
+
+```javascript
+alert(typeof {}); // object
+alert(typeof []); // object (same)
+```
+
+…But arrays are used so often that there’s a special method for that: [Array.isArray(value)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray). It returns `true` if the `value` is an array, and `false` otherwise.
+
+```javascript
+alert(Array.isArray({})); // false
+
+alert(Array.isArray([])); // true
+```
+
+### Most methods support “thisArg”
+
+Almost all array methods that call functions – like `find`, `filter`, `map`, with a notable exception of `sort`, accept an optional additional parameter `thisArg`.
+
+That parameter is not explained in the sections above, because it’s rarely used. But for completeness, we have to cover it.
+
+Here’s the full syntax of these methods:
+
+```javascript
+arr.find(func, thisArg);
+arr.filter(func, thisArg);
+arr.map(func, thisArg);
+// ...
+// thisArg is the optional last argument
+```
+
+The value of `thisArg` parameter becomes `this` for `func`.
+
+For example, here we use a method of `army` object as a filter, and `thisArg` passes the context:
+
+```javascript
+let army = {
+  minAge: 18,
+  maxAge: 27,
+  canJoin(user) {
+    return user.age >= this.minAge && user.age < this.maxAge;
+  }
+};
+
+let users = [
+  {age: 16},
+  {age: 20},
+  {age: 23},
+  {age: 30}
+];
+
+// find users, for who army.canJoin returns true
+let soldiers = users.filter(army.canJoin, army);
+
+alert(soldiers.length); // 2
+alert(soldiers[0].age); // 20
+alert(soldiers[1].age); // 23
+```
+
+If in the example above we used `users.filter(army.canJoin)`, then `army.canJoin` would be called as a standalone function, with `this=undefined`, thus leading to an instant error.
+
+A call to `users.filter(army.canJoin, army)` can be replaced with `users.filter(user => army.canJoin(user))`, that does the same. The latter is used more often, as it’s a bit easier to understand for most people.
+
+# Loops
 
 ### for..of loop
 ```javascript
@@ -1879,3 +2166,6 @@ animal = { species: "cat" };
 console.log(animal); // { species: "cat" }
 console.log(dog); // { species: "dog" }
 ```
+
+
+

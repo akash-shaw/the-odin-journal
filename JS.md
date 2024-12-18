@@ -880,6 +880,17 @@ Objects use **names** to access its "members". In this example, `person.firstNam
 ```javascript
 const person = {firstName:"John", lastName:"Doe", age:46};
 ```
+
+### DOM to Array
+in DOM node list we can't use `filter`, `map`, etc. So we need to convert it to array frist: 
+```javascript
+const divs = document.querySelectorAll("div");
+
+let divArray = Arrays.form(divs);
+// or
+let divArray = Arrays.form(...divs);
+// take every element from divs and sperad it in the array
+``` 
 ## Array Methods
 
 | Method | Syntax | Use |
@@ -973,7 +984,7 @@ arr.sort();
 
 alert( arr );  // 1, 15, 2
 ```
-to sort in our own order, we have to use callback
+to sort in our own order, we have to use callback, based on this callback the array is bubbled
 ```javascript
 function compareNumeric(a, b) {
   if (a > b) return 1;

@@ -335,6 +335,7 @@ They do not change the original variable.
 let str = "15*7/12";
 console.log(eval(str));	//8.75
 ```
+> CAUTION: [Never use direct eval()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_direct_eval!).
 ### String Object <---> Primitive String
 To convert a primitive string to an object:
 ```javascript
@@ -2251,6 +2252,4 @@ animal = { species: "cat" };
 console.log(animal); // { species: "cat" }
 console.log(dog); // { species: "dog" }
 ```
-
-
 

@@ -913,6 +913,22 @@ const person = {firstName:"John", lastName:"Doe", age:46};
 |find|`let result = arr.find(function(item, index, array) {});`|returns `true`/`false`|
 |findIndex|`let result = arr.findIndex(callback);`|same as `find`. returns index if found and `-1` if not.|
 |lastIndexof|`let result = arr.lastIndexOf(callback);`|same as `findIndex`, returns last index if found, `-1` if not|
+|some|`arr.some(fn)`|The function `fn` is called on each element of the array similar to `map`. If any results are `true`, returns `true`, otherwise `false`.|
+|every|`arr.every(fn)`|The function `fn` is called on each element of the array similar to `map`. If all results are `true`, returns `true`, otherwise `false`.|
+|fill|`arr.fill(value, start, end)`|fills the array with repeating `value` from index `start` to `end`. |
+|copyWithin|`arr.copyWithin(target, start, end)`|copies its elements from position `start` till position `end` into _itself_, at position `target` (overwrites existing)|
+|flat/faltMap|`arr.flat(depth)`/`arr.flatMap(fn) `|create a new flat array from a multidimensional array|
+> List of all methods [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
+> Good [reference](https://javascript.info/array-methods#summary).
+
+every/some example:
+```javascript
+function arraysEqual(arr1, arr2) {
+  return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index]);
+}
+
+alert( arraysEqual([1, 2], [1, 2])); // true
+```
 > NOTE
 > `includes` correctly handles `NaN`, unlike `indexOf`
 > ```javascript
@@ -921,7 +937,7 @@ const person = {firstName:"John", lastName:"Doe", age:46};
 > alert( arr.includes(NaN) );// true (correct)
 > ```
 
-
+> NOTE: methods `sort`, `reverse` and `splice` modify the array itself.
 ### Splice
 ```javascript
 arr.splice(start[, deleteCount, elem1, ..., elemN])
@@ -986,6 +1002,24 @@ let countries = ['Österreich', 'Andorra', 'Vietnam'];
 alert( countries.sort( (a, b) => a > b ? 1 : -1) ); // Andorra, Vietnam, Österreich (wrong)
 
 alert( countries.sort( (a, b) => a.localeCompare(b) ) ); // Andorra,Österreich,Vietnam (correct!)
+```
+sorting objects based on property
+```javascript
+const books = [
+  { title: "Book A", year: 2010 },
+  { title: "Book B", year: 2005 },
+  { title: "Book C", year: 2018 },
+];
+
+const booksSortedByYearAsc = books.sort((a, b) => a.year - b.year);
+console.log(booksSortedByYearAsc);
+
+// Output:
+[
+  { title: "Book B", year: 2005 },
+  { title: "Book A", year: 2010 },
+  { title: "Book C", year: 2018 },
+];
 ```
 
 ### Split & join
@@ -1195,6 +1229,36 @@ If in the example above we used `users.filter(army.canJoin)`, then `army.canJoin
 
 A call to `users.filter(army.canJoin, army)` can be replaced with `users.filter(user => army.canJoin(user))`, that does the same. The latter is used more often, as it’s a bit easier to understand for most people.
 
+### Chech two arrays are equal
+```javascript
+function arraysEqual(arr1, arr2) {
+  return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index]);
+}
+
+alert( arraysEqual([1, 2], [1, 2])); // true
+```
+### Shuffle
+> for details check [this](https://javascript.info/array-methods#shuffle-an-array).
+```javascript
+function shuffle(arr){
+	return arr.sort( () => Math.random() - 0.5 );
+}
+// not the best shuffle algo, has biasness
+// returns positive negative or zero randomly based on that array is sorted randomly
+```
+Better algo: [Fisher-Yates shuffle](https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle):
+```javascript
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+
+    // swap elements array[i] and array[j]
+    [array[i], array[j]] = [array[j], array[i]];
+    // "destructuring assignment" syntax, same as
+    // let t = array[i]; array[i] = array[j]; array[j] = t
+  }
+}
+```
 # Loops
 
 ### for..of loop

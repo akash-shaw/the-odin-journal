@@ -617,7 +617,7 @@ let welcome = (age < 18) ?
 	};
 	```
 
-### Nullish coalescing operator
+### nullish coalescing operator
 
 it’s better when most falsy values, such as `0`, should be considered “normal”
 
@@ -626,6 +626,16 @@ function showCount(count) {
   // if count is undefined or null, show "unknown"
   alert(count ?? "unknown");
 }
+```
+Another example:
+```javascript
+const getAge = function (person) {
+  // The nullish coalescing assignment operator
+  // only does the assignment if the left side is "nullish" (evaluates to undefined or null)
+  // if the left side has any other value, no assignment happens
+  person.yearOfDeath ??= new Date().getFullYear();
+  return person.yearOfDeath - person.yearOfBirth;
+};
 ```
 
 ### Return

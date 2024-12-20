@@ -306,3 +306,33 @@ Flexbox is an **inner display type** (`flex` and `inline-flex`) to arrange items
 	- [Card layouts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Typical_Use_Cases_of_Flexbox#card_layout_pushing_footer_down) pushing footer down
 	- [Media objects](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Typical_use_cases_of_flexbox#media_objects) (an image or other element to one side and text to the right)
 	- [Responsive forms](https://www.joshwcomeau.com/css/interactive-guide-to-flexbox/) without using media queries
+
+
+## Normalize css
+
+### Normalize vs Reset vs Hybrid
+
+- Normalize generally makes the style uniform throughout the browsers
+- Reset makes the webpage a blank slate to style it with css, removing defualt browser styling entirely
+- Somewhere between reset and normalize
+
+### Good resources
+
+- [normalize.css](https://github.com/necolas/normalize.css) - most popular one
+- [modern-normalize](https://github.com/sindresorhus/modern-normalize) - highly recommended
+- Tailwind uses [preflight](https://tailwindcss.com/docs/preflight)
+- [Eric Meyer's CSS reset](https://meyerweb.com/eric/tools/css/reset/) - but it's OLD
+- [Josh Comeau's CSS reset](https://www.joshwcomeau.com/css/custom-css-reset/#the-css-reset-1)
+- [Browser default styles](https://browserdefaultstyles.com/)
+
+
+### Undo a reset
+
+use `revert` keyword
+
+```css
+.article :where(h1, h2, h3, h4, h5) {
+  all: revert;
+}
+```
+Within an `.article`, headings are displayed using the original browser default styles, with appropriate font sizes and weights, thanks to `revert`

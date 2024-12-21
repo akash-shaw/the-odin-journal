@@ -336,3 +336,22 @@ use `revert` keyword
 }
 ```
 Within an `.article`, headings are displayed using the original browser default styles, with appropriate font sizes and weights, thanks to `revert`
+
+
+
+## CSS Units
+> [List](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Values_and_units) of all the units
+
+- `1px` is 1/96th of an inch. Not the length of a physical pixel
+-  `1rem` is the `font-size` of the root element (either `:root` or `html`). (preferred unit) (Most of the time 16px)
+- `1em` is the `font-size` of an element (or the element’s parent if you’re using it to set `font-size`)
+- `1ch` is width of `0`
+- `1vmin`/`1vmax` is 1% of the viewport width or height, whichever is smaller/larger
+#### Use Cases
+- `vh`,`vw` for hero elements
+- `rem` for font size
+- `%` for width generally, with `max-width`
+- `ch` for `<p>` width (don't go over `75`, `45`-`55` is a good number)
+- Generally do not specify `height`, if absolutely needed use `min-height`
+- may use `em` for button padding
+- may use `px` for other margin padding, but its highly subjective, check [here](https://codepen.io/codyloyd/pen/mdOXeMX)

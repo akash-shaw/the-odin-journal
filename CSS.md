@@ -355,3 +355,62 @@ Within an `.article`, headings are displayed using the original browser default 
 - Generally do not specify `height`, if absolutely needed use `min-height`
 - may use `em` for button padding
 - may use `px` for other margin padding, but its highly subjective, check [here](https://codepen.io/codyloyd/pen/mdOXeMX)
+
+## Fonts
+
+
+### Fallback font
+- CSS trick's [system font stack](https://css-tricks.com/snippets/css/system-font-stack/)
+	```css
+	body {
+	  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	}
+	```
+
+### Self-hosted fonts
+- Using google fonts [violates European GDPR](https://thehackernews.com/2022/01/german-court-rules-websites-embedding.html)
+- All major browsers support woff
+- Find fonts here, [font squirrel](https://www.fontsquirrel.com/fonts/list/hot_web), [dafont](https://www.dafont.com/)
+```css
+@font-face {
+    font-family: "Open Sans";
+    src: url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2");
+    unicode-range: U+0025-00FF;
+}
+
+h1 {
+  font-family: my-cool-font, sans-serif;
+}
+```
+
+### Style norms
+- Use `line-height: 1.5` for better readability and accesibility
+- Dn't have more than 75 characters per line
+
+### text styles
+- `text-transform: capitalize/uppercase/lowercase/none/full-width/etc` 
+- ellipsis ( ... at overflow )
+	```css
+	.overflowing {
+	  white-space: nowrap;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	}
+	```
+### Best practices
+- Use preconnect while using external source, using `<link>` is more preferred than `@import`
+	```html
+	<head>
+	  <link rel="preconnect" href="https://fonts.googleapis.com">
+	  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	</head>
+	```
+- [Dynamic font size](https://web.dev/learn/design/typography#text_size)
+	```css
+	article {
+	  font-size: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+	  max-inline-size:  66ch;
+	  line-height: 1.65;
+	}
+	```
+

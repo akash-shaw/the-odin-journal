@@ -78,6 +78,54 @@
 - ### Inheritance
 	Typography-based properties (`color`, `font-size`, `font-family`, etc.) are usually inherited, while most other properties aren’t.
 
+- ### Child and Sibling Combinators
+	> For details, [refer this](https://www.theodinproject.com/lessons/node-path-intermediate-html-and-css-advanced-selectors).
+	-   `>` - the child combinator
+	-   `+` - the adjacent sibling combinator
+	-   `~` - the general sibling combinator
+
+	```html
+	<main class="parent">
+	  <div class="child group1">
+	    <div class="grand-child group1"></div>
+	  </div>
+	  <div class="child group2">
+	    <div class="grand-child group2"></div>
+	  </div>
+	  <div class="child group3">
+	    <div class="grand-child group3"></div>
+	  </div>
+	</main>
+	```
+	```css
+	/* The divs with the class "child" will get selected by this */
+	main > div {
+	  /* Our cool CSS */
+	}
+
+	/* The divs with the class "grand-child" will get selected by this */
+	main > div > div {
+	  /* More cool CSS */
+	}
+	```
+	```css
+	/* Only the div with the classes "child group2" will get selected by this */
+	.group1 + div {
+	  /* Our cool CSS */
+	}
+
+	/* Only the div with the classes "child group3" will get selected by this */
+	.group1 + div + div {
+	  /* More cool CSS */
+	}
+	```
+	```css
+	/* All of .group1's div siblings - in this case the 2nd and 3rd .child divs, will get selected by this */
+	.group1 ~ div {
+	  /* Our cool CSS */
+	}
+	```
+
 ## Specificity, the Cascade
 
 Sort of like a tie-breaker, when an element has multiple, conflicting declarations targeting it.  
@@ -414,3 +462,38 @@ h1 {
 	}
 	```
 
+## Pseudo classes and pseudo elements
+
+> For details, [refer this](https://www.theodinproject.com/lessons/node-path-intermediate-		html-and-css-advanced-selectors#pseudo-selectors).
+
+-   **Dynamic/User Action:**
+    
+    -   `:focus`: Element selected by user (e.g., cursor or keyboard).
+    -   `:hover`: Element under mouse pointer.
+    -   `:active`: Element being clicked.
+    -   `:link` & `:visited`: Style links based on their state (e.g., blue for unvisited, purple for visited).
+-   **Structural:**
+    
+    -   `:root`: Top-level document element, often used for global styles.
+    -   `:first-child`, `:last-child`, `:only-child`, `:empty`: Select elements based on their position or content.
+    -   `:nth-child(n)`: Flexible selection based on patterns (e.g., every 3rd, even/odd). [reference](https://css-tricks.com/almanac/pseudo-selectors/n/nth-child/).
+
+**Pseudo-elements:**  
+Allow styling of parts of elements not directly present in HTML, with specificity `(0,0,0,1)`.
+
+-   Examples:
+    -   `::marker`: Style bullets or numbers in lists.
+    -   `::first-letter`, `::first-line`: Style the first letter or line of text.
+    -   `::selection`: Customize text highlight styling. Only works with - 
+	    - `color`
+	    - `background` (specifically the background-color, background-image longhand properties)
+	    - `text-shadow`
+    -   `::before`, `::after`: Add extra content via CSS. [Some use cases](https://css-tricks.com/7-practical-uses-for-the-before-and-after-pseudo-elements-in-css/).
+
+**Attribute Selectors:**  
+Target elements based on attributes, with specificity `(0,0,1,0)`.
+
+-   Syntax Examples:
+    -   `[attribute]`: Selects elements with the specified attribute.
+    -   `[attribute="value"]`: Matches exact values.
+    -   `[attribute^="value"]`, `[attribute$=".jpg"]`, `[attribute*="value"]`: Match strings starting with, ending with, or containing the value.

@@ -2253,3 +2253,129 @@ console.log(animal); // { species: "cat" }
 console.log(dog); // { species: "dog" }
 ```
 
+### Constructor
+
+```javascript
+function Player(name, marker) {
+  this.name = name;
+  this.marker = marker;
+  this.sayName = function() {
+    console.log(this.name)
+  };
+}
+
+const player1 = new Player('steve', 'X');
+const player2 = new Player('also steve', 'O');
+player1.sayName(); // logs 'steve'
+player2.sayName(); // logs 'also steve'
+```
+
+### Prototype
+To check whether a object is an instance of a specific prototype or not
+from the above example:
+```javascript
+Object.getPrototypeOf(player1) === Player.prototype; // returns true
+Object.getPrototypeOf(player2) === Player.prototype; // returns true
+
+Object.getPrototypeOf(Player.prototype) === Object.prototype; // true
+// This means that Player.prototype is inheriting from Object.prototype
+```
+-   The _value_ of the Object Constructor’s `.prototype` property (i.e., `Player.prototype`) contains the `prototype` object.
+-   The _reference_ to this value of `Player.prototype` is stored in every `Player` object, every time a `Player` object is created.
+-   Hence, you get a `true` value returned when you check the Objects prototype - `Object.getPrototypeOf(player1) === Player.prototype`.
+
+Add more items to the constructor:
+```javascript
+Player.prototype.sayHello = function() {
+   console.log("Hello, I'm a player!");
+};
+
+player1.sayHello(); // logs "Hello, I'm a player!"
+player2.sayHello(); // logs "Hello, I'm a player!"
+```
+- We can define properties and functions common among all objects on the `prototype` to save memory. Defining every property and function takes up a lot of memory, especially if you have a lot of common properties and functions, and a lot of created objects! Defining them on a centralized, shared object which the objects have access to, thus saves memory.
+
+#### hasOwnProperty
+```javascript
+player1.hasOwnProperty('valueOf'); // false
+Object.prototype.hasOwnProperty('valueOf'); // true
+Object.prototype.hasOwnProperty('hasOwnProperty'); // true
+```
+
+#### Inheritance
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.sayName = function() {
+  console.log(`Hello, I'm ${this.name}!`);
+};
+
+function Player(name, marker) {
+  this.name = name;
+  this.marker = marker;
+}
+
+Player.prototype.getMarker = function() {
+  console.log(`My marker is '${this.marker}'`);
+};
+
+Object.getPrototypeOf(Player.prototype); // returns Object.prototype
+
+// Now make `Player` objects inherit from `Person`
+Object.setPrototypeOf(Player.prototype, Person.prototype);
+Object.getPrototypeOf(Player.prototype); // returns Person.prototype
+
+const player1 = new Player('steve', 'X');
+const player2 = new Player('also steve', 'O');
+
+player1.sayName(); // Hello, I'm steve!
+player2.sayName(); // Hello, I'm also steve!
+
+player1.getMarker(); // My marker is 'X'
+player2.getMarker(); // My marker is 'O'
+
+```
+> Though it seems to be an easy way to set up Prototypal Inheritance using `Object.setPrototypeOf()`, the prototype chain has to be set up using this function _before_ creating any objects. Using `setPrototypeOf()` after objects have already been created can result in performance issues
+
+Another example:
+```javascript
+// Initialize constructor functions
+function Hero(name, level) {
+  this.name = name;
+  this.level = level;
+}
+
+function Warrior(name, level, weapon) {
+  Hero.call(this, name, level);
+
+  this.weapon = weapon;
+}
+
+function Healer(name, level, spell) {
+  Hero.call(this, name, level);
+
+  this.spell = spell;
+}
+
+// Link prototypes and add prototype methods
+Object.setPrototypeOf(Warrior.prototype, Hero.prototype);
+Object.setPrototypeOf(Healer.prototype, Hero.prototype);
+
+Hero.prototype.greet = function () {
+  return `${this.name} says hello.`;
+}
+
+Warrior.prototype.attack = function () {
+  return `${this.name} attacks with the ${this.weapon}.`;
+}
+
+Healer.prototype.heal = function () {
+  return `${this.name} casts ${this.spell}.`;
+}
+
+// Initialize individual character instances
+const hero1 = new Warrior('Bjorn', 1, 'axe');
+const hero2 = new Healer('Kanin', 1, 'cure');
+```
